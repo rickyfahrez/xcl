@@ -1,0 +1,6 @@
+Game exited with code 0xc0000409 (3221226505)
+Imports: 1186 (game-dll:amd_fidelityfx_loader_xbox.dll: 4, game-dll:bink2scarlett.dll: 23, game-dll:libhttpclient.gdk.dll: 38, game-dll:msvcp140.dll: 157, game-dll:vcruntime140.dll: 82, game-dll:vcruntime140_1.dll: 4, game-dll:xboxbvhbuilder.dll: 7, hle-cross:kernelx.dll: 14, hle:acphal.dll: 19, hle:d3d12_xs.dll: 4, hle:gameinput.dll: 1, hle:kernelx.dll: 56, hle:minuserx.dll: 2, hle:xaudio2_9.dll: 1, hle:xcrdapi.dll: 1, hle:xg_xs.dll: 2, stub: 1, system: 770)
+Report: C:\Users\ricky\AppData\Local\XCL\RockstarGamesInc.28872443D20A7\logs\report.json
+Log:    C:\Users\ricky\AppData\Local\XCL\RockstarGamesInc.28872443D20A7\logs\xcl.log
+
+XCL ended with code -1073740791. Press Enter to close.
