@@ -2,7 +2,7 @@
   "xcl_version": "0.1.0",
   "title": "RockstarGamesInc.28872443D20A7",
   "exe": "C:\\Users\\ricky\\Downloads\\Compressed\\GTA6.Xbox.v1.0.2.1-CYBERLEEK\\game_scarlett_master.exe",
-  "crash": "unhandled exception 0xc0000005 in game_scarlett_master.exe+0x23cf683 (write at address 0x0) rax=0x0 rbx=0x0 rcx=0xb0024c348 rdx=0x1 rsi=0x495eff718 rdi=0x1a90b61ef72 rbp=0x0 r8=0xb074d8c40 r9=0xb074d8e20 r10=0xb074d8ad8 r11=0xb074d8c40 r12=0x1a8c59f126b r13=0x146845c28 r14=0x7ffeff184670 r15=0x1a8f9c043d3 rsp=0x495eff6a0; on the stack: game_scarlett_master.exe+0x4e4ba89, game_scarlett_master.exe+0x2215c35, game_scarlett_master.exe+0x71b9a20, game_scarlett_master.exe+0x2215eca",
+  "crash": "unhandled exception 0xc0000005 in game_scarlett_master.exe+0x23cf683 (write at address 0x0) rax=0x0 rbx=0x0 rcx=0x70024c348 rdx=0x1 rsi=0xa40cffa98 rdi=0x1aa860f6abe rbp=0x0 r8=0x7074d8c40 r9=0x7074d8e20 r10=0x7074d8ad8 r11=0x7074d8c40 r12=0x1aa404d7294 r13=0x146845c28 r14=0x7ffeff184670 r15=0x1aa743f1be1 rsp=0xa40cffa20; on the stack: game_scarlett_master.exe+0x4e4ba89, game_scarlett_master.exe+0x2215c35, game_scarlett_master.exe+0x71b9a20, game_scarlett_master.exe+0x2215eca",
   "exit_code": 3221225477,
   "environment": [
     {
@@ -50,43 +50,43 @@
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#142 (not on PC)",
-      "calls": 3468,
+      "calls": 4370,
       "first_caller": "game_scarlett_master.exe+0x329e9"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12CommandAllocator::#9 (not on PC)",
-      "calls": 3396,
+      "calls": 4294,
       "first_caller": "game_scarlett_master.exe+0x188501"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#75 (console extension)",
-      "calls": 3281,
+      "calls": 4183,
       "first_caller": "game_scarlett_master.exe+0x32820"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#126 (not on PC)",
-      "calls": 3280,
+      "calls": 4182,
       "first_caller": "game_scarlett_master.exe+0x3263e"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12CommandQueue::#31 (newer layout)",
-      "calls": 415,
+      "calls": 374,
       "first_caller": "0x0"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#101 (not on PC)",
-      "calls": 10,
+      "calls": 18,
       "first_caller": "game_scarlett_master.exe+0x50a6657"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#131 (not on PC)",
-      "calls": 4,
+      "calls": 5,
       "first_caller": "game_scarlett_master.exe+0x2478bc5"
     },
     {
@@ -121,32 +121,32 @@
     },
     {
       "name": "vcruntime140.dll",
-      "base": "0x163388d0000",
+      "base": "0x1be5d170000",
       "size": "0x1b000"
     },
     {
       "name": "vcruntime140_1.dll",
-      "base": "0x16338900000",
+      "base": "0x1be5d190000",
       "size": "0xc000"
     },
     {
       "name": "xboxbvhbuilder.dll",
-      "base": "0x163414f0000",
+      "base": "0x1be65dc0000",
       "size": "0xde000"
     },
     {
       "name": "amd_fidelityfx_loader_xbox.dll",
-      "base": "0x16338910000",
+      "base": "0x1be5d1a0000",
       "size": "0x8000"
     },
     {
       "name": "libhttpclient.gdk.dll",
-      "base": "0x163415d0000",
+      "base": "0x1be65ea0000",
       "size": "0xf4000"
     },
     {
       "name": "bink2scarlett.dll",
-      "base": "0x16339fd0000",
+      "base": "0x1be5d1b0000",
       "size": "0x44000"
     }
   ],
@@ -156,95 +156,95 @@
     "whiteouts": []
   },
   "shaders": {
-    "unique": 19242,
-    "submitted": 274805,
+    "unique": 19244,
+    "submitted": 274817,
     "by_kind": {
       "dxbc": 143,
-      "xbox-native": 19099
+      "xbox-native": 19101
     },
     "unknown_parts": {},
     "by_stage": {
       "as": 25479,
       "cs": 2742,
-      "ps": 134398,
+      "ps": 134404,
       "rootsig": 146,
-      "vs": 112040
+      "vs": 112046
     },
     "rejected_pointers": 0,
     "dump_dir": "C:\\Users\\ricky\\AppData\\Local\\XCL\\RockstarGamesInc.28872443D20A7\\shaders",
     "xbox_hw_stages": {
       "CS": 2734,
       "NGG": 6685,
-      "PS": 8519,
-      "VS": 1161
+      "PS": 8520,
+      "VS": 1162
     },
     "xbox_errors": 0,
-    "rdna2_instructions": 37858913,
+    "rdna2_instructions": 37859354,
     "rdna2_undecoded_dwords": 0,
     "rdna2_mnemonics": [
       [
         "v_mul_legacy_f32",
-        5118036
+        5118099
       ],
       [
         "v_fmac_f32",
-        3438265
+        3438299
       ],
       [
         "s_waitcnt",
-        2118532
+        2118569
       ],
       [
         "v_fma_f32",
-        2052745
+        2052757
       ],
       [
         "v_mov_b32",
-        1843995
+        1844005
       ],
       [
         "v_cndmask_b32",
-        1276838
+        1276843
       ],
       [
         "s_mov_b32",
-        1243628
+        1243663
       ],
       [
         "v_sub_f32",
-        1227262
+        1227269
       ],
       [
         "v_add_f32",
-        1126946
+        1126959
       ],
       [
         "s_load_dwordx4",
-        805758
+        805768
       ],
       [
         "s_nop",
-        610501
+        610512
       ],
       [
         "v_and_b32",
-        543500
+        543502
       ],
       [
         "s_cbranch_execz",
-        538276
+        538283
       ],
       [
         "s_buffer_load_dword",
-        525269
+        525273
       ],
       [
         "s_and_b32",
-        485006
+        485012
       ],
       [
         "s_mov_b64",
-        484602
+        484615
       ],
       [
         "s_add_i32",
@@ -252,19 +252,19 @@
       ],
       [
         "v_fma_mix_f32",
-        416819
+        416824
       ],
       [
         "v_rcp_f32",
-        381988
+        381991
       ],
       [
         "s_buffer_load_dwordx4",
-        374749
+        374760
       ],
       [
         "v_max_f32",
-        348574
+        348576
       ],
       [
         "v_mul_f32",
@@ -272,11 +272,11 @@
       ],
       [
         "v_add_nc_u32",
-        293784
+        293789
       ],
       [
         "s_load_dwordx8",
-        291096
+        291105
       ],
       [
         "v_lshrrev_b32",
@@ -288,15 +288,15 @@
       ],
       [
         "buffer_load_dword",
-        247102
+        247104
       ],
       [
         "v_cmp_eq_u32",
-        232751
+        232754
       ],
       [
         "v_subrev_f32",
-        231757
+        231758
       ],
       [
         "s_cmp_eq_u32",
@@ -304,11 +304,11 @@
       ],
       [
         "s_lshl_b32",
-        227199
+        227203
       ],
       [
         "v_rsq_f32",
-        226382
+        226383
       ],
       [
         "v_mac_f32",
@@ -316,7 +316,7 @@
       ],
       [
         "s_lshr_b32",
-        210550
+        210556
       ],
       [
         "v_cmp_lt_f32",
@@ -324,15 +324,15 @@
       ],
       [
         "v_cvt_f32_ubyte0",
-        198819
+        198820
       ],
       [
         "s_or_b32",
-        194305
+        194306
       ],
       [
         "v_readfirstlane_b32",
-        189089
+        189091
       ],
       [
         "v_mad_u32_u24",
@@ -344,15 +344,15 @@
       ],
       [
         "v_sqrt_f32",
-        177628
+        177629
       ],
       [
         "s_buffer_load_dwordx2",
-        164816
+        164822
       ],
       [
         "image_sample_lz",
-        164538
+        164546
       ],
       [
         "s_branch",
@@ -364,15 +364,15 @@
       ],
       [
         "v_cvt_u32_f32",
-        152345
+        152346
       ],
       [
         "s_and_b64",
-        150571
+        150574
       ],
       [
         "v_mul_lo_u32",
-        149797
+        149800
       ],
       [
         "s_and_saveexec_b32",
@@ -380,7 +380,7 @@
       ],
       [
         "v_nop",
-        147323
+        147328
       ],
       [
         "s_cselect_b32",
@@ -388,7 +388,7 @@
       ],
       [
         "v_exp_f32",
-        136663
+        136664
       ],
       [
         "v_cmp_le_f32",
@@ -396,7 +396,7 @@
       ],
       [
         "v_cmpx_eq_u32",
-        136008
+        136011
       ],
       [
         "s_cbranch_vccnz",
@@ -412,11 +412,11 @@
       ],
       [
         "v_bfe_u32",
-        123947
+        123949
       ],
       [
         "v_lshlrev_b32",
-        122552
+        122554
       ],
       [
         "v_cvt_f32_ubyte1",
@@ -424,15 +424,15 @@
       ],
       [
         "s_movk_i32",
-        109657
+        109659
       ],
       [
         "s_and_saveexec_b64",
-        109485
+        109487
       ],
       [
         "s_andn2_b64",
-        106078
+        106080
       ],
       [
         "s_cmp_lg_u32",
@@ -448,7 +448,7 @@
       ],
       [
         "exp",
-        98049
+        98056
       ],
       [
         "v_min_f32",
@@ -468,11 +468,11 @@
       ],
       [
         "v_interp_p1_f32",
-        87333
+        87341
       ],
       [
         "v_interp_p2_f32",
-        87333
+        87341
       ],
       [
         "s_mul_i32",
@@ -488,11 +488,11 @@
       ],
       [
         "v_log_f32",
-        80527
+        80528
       ],
       [
         "v_cmp_ne_u32",
-        79344
+        79348
       ],
       [
         "v_readlane_b32",
@@ -500,7 +500,7 @@
       ],
       [
         "v_cvt_f32_f16",
-        74330
+        74331
       ],
       [
         "s_bfe_u32",
@@ -512,15 +512,15 @@
       ],
       [
         "image_sample",
-        72759
+        72760
       ],
       [
         "s_cbranch_execnz",
-        70652
+        70654
       ],
       [
         "s_buffer_load_dwordx8",
-        67723
+        67724
       ],
       [
         "v_cmpx_lt_f32",
@@ -556,11 +556,11 @@
       ],
       [
         "v_lshl_add_u32",
-        52774
+        52775
       ],
       [
         "v_med3_f32",
-        52342
+        52343
       ],
       [
         "v_cmp_le_u32",
@@ -576,11 +576,11 @@
       ],
       [
         "s_add_u32",
-        50248
+        50249
       ],
       [
         "v_cmpx_ne_u32",
-        49917
+        49918
       ],
       [
         "v_cmp_ge_f32",
@@ -588,11 +588,11 @@
       ],
       [
         "buffer_load_dwordx2",
-        46579
+        46581
       ],
       [
         "s_buffer_load_dwordx16",
-        45493
+        45494
       ],
       [
         "v_cmp_lg_f32",
@@ -612,7 +612,7 @@
       ],
       [
         "buffer_load_dwordx3",
-        44233
+        44234
       ],
       [
         "v_cmpx_gt_f32",
@@ -624,7 +624,7 @@
       ],
       [
         "v_cvt_pkrtz_f16_f32",
-        40345
+        40349
       ],
       [
         "s_xor_b64",
@@ -684,7 +684,7 @@
       ],
       [
         "s_setreg_imm32_b32",
-        26278
+        26280
       ],
       [
         "v_sin_f32",
@@ -696,7 +696,7 @@
       ],
       [
         "s_endpgm",
-        25070
+        25072
       ],
       [
         "v_pack_b32_f16",
@@ -736,11 +736,11 @@
       ],
       [
         "v_cmpx_gt_u32",
-        19775
+        19776
       ],
       [
         "s_inst_prefetch",
-        19099
+        19101
       ],
       [
         "v_cmp_gt_u32",
@@ -772,7 +772,7 @@
       ],
       [
         "s_andn2_wrexec_b64",
-        16836
+        16838
       ],
       [
         "v_or_b32_dpp8",
@@ -784,7 +784,7 @@
       ],
       [
         "tbuffer_load_format_xyzw",
-        16032
+        16033
       ],
       [
         "v_mul_u32_u24",
@@ -796,7 +796,7 @@
       ],
       [
         "s_wqm_b64",
-        14480
+        14481
       ],
       [
         "v_cmpx_gt_i32",
@@ -836,7 +836,7 @@
       ],
       [
         "v_add_co_ci_u32",
-        11537
+        11540
       ],
       [
         "v_and_b32_sdwa",
@@ -852,7 +852,7 @@
       ],
       [
         "v_add_co_u32",
-        9877
+        9880
       ],
       [
         "image_gather4_lz",
@@ -868,7 +868,7 @@
       ],
       [
         "global_load_dword",
-        9258
+        9261
       ],
       [
         "v_bcnt_u32_b32",
@@ -924,7 +924,7 @@
       ],
       [
         "s_addc_u32",
-        7245
+        7246
       ],
       [
         "s_cmp_lt_i32",
@@ -932,7 +932,7 @@
       ],
       [
         "v_ashrrev_i32",
-        7068
+        7071
       ],
       [
         "s_sendmsg",
@@ -944,7 +944,7 @@
       ],
       [
         "v_lshlrev_b64",
-        6391
+        6394
       ],
       [
         "s_bcnt1_i32_b32",
@@ -992,11 +992,11 @@
       ],
       [
         "s_getpc_b64",
-        4957
+        4958
       ],
       [
         "v_cvt_f32_f16_sdwa",
-        4930
+        4932
       ],
       [
         "v_interp_mov_f32",
@@ -2164,29 +2164,29 @@
     "fallback_pipelines": 0,
     "failed_pipelines": 0,
     "fallback_root_signatures": 0,
-    "presents": 3234,
-    "frame_boundaries": 3234,
+    "presents": 4123,
+    "frame_boundaries": 4123,
     "last_frame_dump": null,
     "uma_mb": 4095,
     "uma_used_kb": 4094592,
     "uma_gpu_va": "0x3e0000000",
     "uma_error": "",
-    "uma_import_check": "ok, 1 window(s), 27408 µs",
-    "translated_pipelines": 1614,
+    "uma_import_check": "ok, 1 window(s), 28780 µs",
+    "translated_pipelines": 1637,
     "translation_errors": [
       "mesh pipeline with its MS d7c434f73b4b811c in the AS slot – refused",
       "mesh pipeline with its MS 8659e9d5df3e2a9e in the AS slot – refused",
       "mesh pipeline with its MS 2569510a8f45fc8f in the AS slot – refused",
       "mesh pipeline with its MS 83391337d7778b85 in the AS slot – refused",
-      "mesh pipeline with its MS 46a7e2c22a768e71 in the AS slot – refused",
       "mesh pipeline with its MS df3117932e08790f in the AS slot – refused",
       "mesh pipeline with its MS ea3683175cc1063c in the AS slot – refused",
-      "mesh pipeline with its MS d8be47673b69a36b in the AS slot – refused",
       "mesh pipeline with its MS 1975c2a6e0fa0b2a in the AS slot – refused",
+      "mesh pipeline with its MS d8be47673b69a36b in the AS slot – refused",
+      "mesh pipeline with its MS 46a7e2c22a768e71 in the AS slot – refused",
       "mesh pipeline with its MS 2bdc6171bf337731 in the AS slot – refused",
-      "mesh pipeline with its MS c26dfbed7866f6ea in the AS slot – refused",
-      "mesh pipeline with its MS 0cc369e804d4ceb9 in the AS slot – refused",
       "mesh pipeline with its MS 3393dfd087f8cdf1 in the AS slot – refused",
+      "mesh pipeline with its MS 0cc369e804d4ceb9 in the AS slot – refused",
+      "mesh pipeline with its MS c26dfbed7866f6ea in the AS slot – refused",
       "mesh pipeline with its MS bc46bcfef12b8d08 in the AS slot – refused",
       "mesh pipeline with its MS b9f81870f0552c0c in the AS slot – refused",
       "mesh pipeline with its MS 32b93f54af6afb43 in the AS slot – refused",
@@ -2194,21 +2194,21 @@
       "mesh pipeline with its MS 1af98f4aa904699a in the AS slot – refused",
       "mesh pipeline with its MS 46c0a00b11312788 in the AS slot – refused",
       "mesh pipeline with its MS 2e81a8f85d8b1866 in the AS slot – refused",
-      "mesh pipeline with its MS 2014fd71a70d5c80 in the AS slot – refused",
       "mesh pipeline with its MS 3a8635b3e744f405 in the AS slot – refused",
+      "mesh pipeline with its MS 2014fd71a70d5c80 in the AS slot – refused",
       "mesh pipeline with its MS e5e2b8a1cc1f670c in the AS slot – refused",
       "mesh pipeline with its MS 27819c032a1497f1 in the AS slot – refused",
       "mesh pipeline with its MS f5b22f533b58a920 in the AS slot – refused",
       "mesh pipeline with its MS 5524144c7e9e1bf8 in the AS slot – refused",
       "mesh pipeline with its MS c1ab6f7d127c5600 in the AS slot – refused",
-      "mesh pipeline with its MS c1417364145cbf68 in the AS slot – refused",
-      "mesh pipeline with its MS 397ccc5c003d279d in the AS slot – refused",
       "mesh pipeline with its MS 05220b29562bdfbe in the AS slot – refused",
+      "mesh pipeline with its MS 397ccc5c003d279d in the AS slot – refused",
+      "mesh pipeline with its MS c1417364145cbf68 in the AS slot – refused",
       "mesh pipeline with its MS f8b4ec63795b957a in the AS slot – refused",
       "mesh pipeline with its MS 8c274e3123b82f44 in the AS slot – refused",
       "mesh pipeline with its MS c505395fd3869f71 in the AS slot – refused",
-      "mesh pipeline with its MS 8880e152e9d88cf5 in the AS slot – refused",
       "mesh pipeline with its MS c107ef58496ad61d in the AS slot – refused",
+      "mesh pipeline with its MS 8880e152e9d88cf5 in the AS slot – refused",
       "mesh pipeline with its MS fb5ee08e44bf0a18 in the AS slot – refused",
       "mesh pipeline with its MS 29f678c8f3a58712 in the AS slot – refused",
       "mesh pipeline with its MS 3289b87aa7179b62 in the AS slot – refused",
@@ -2216,16 +2216,16 @@
       "mesh pipeline with its MS f78880048a6e4d38 in the AS slot – refused"
     ],
     "background_pipelines": [
-      1614,
+      1637,
       0,
-      57148
+      57128
     ],
     "dxil_cache": {
-      "hits": 2946,
-      "misses": 24,
+      "hits": 2990,
+      "misses": 34,
       "coalesced_hits": 0,
       "deferred_misses": 0,
-      "compilations": 24,
+      "compilations": 34,
       "compilation_failures": 0,
       "compilation_errors": []
     }
@@ -2248,10 +2248,10 @@
     "buffers_silenced": 0,
     "source_voice_errors": 0,
     "dropped_flags": [],
-    "xapu_packets_decoded": 7213,
+    "xapu_packets_decoded": 12112,
     "xapu_decode_errors": 0,
-    "xapu_frames": 6921360,
-    "xapu_nonzero_samples": 9136301
+    "xapu_frames": 11619720,
+    "xapu_nonzero_samples": 16709165
   },
   "xgameruntime": {
     "apis": {
@@ -2275,16 +2275,16 @@
   "dstorage": {
     "bcpack_refused": {
       "BC1": {
-        "requests": 2084,
+        "requests": 2094,
         "with_zlib": 0,
-        "destination_bytes": 148234240,
-        "filled_bytes": 148221952
+        "destination_bytes": 148807680,
+        "filled_bytes": 148807680
       },
       "BC5": {
-        "requests": 110,
+        "requests": 109,
         "with_zlib": 0,
-        "destination_bytes": 7274496,
-        "filled_bytes": 7274496
+        "destination_bytes": 7208960,
+        "filled_bytes": 7208960
       },
       "BC6H": {
         "requests": 1,
@@ -2293,10 +2293,10 @@
         "filled_bytes": 1048576
       },
       "BC7": {
-        "requests": 200,
+        "requests": 197,
         "with_zlib": 0,
-        "destination_bytes": 25272320,
-        "filled_bytes": 25272320
+        "destination_bytes": 25300992,
+        "filled_bytes": 25300992
       }
     }
   },
