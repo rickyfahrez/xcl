@@ -85,6 +85,7 @@ const XSYSTEM_V3_IID: Guid = g(0x6fd71f09_7513_49f0_89bc_bfaf5df6f852);
 const XANALYTICS: Guid = g(0xb884675d_b738_4a9c_815d_9a9a1e0c6c9b);
 const XFEATURE: Guid = g(0x8836fe87_edb9_4fe3_8dad_05f0d2cd5b40);
 const XDISPLAY: Guid = g(0x1b339674_328d_4283_a200_3171f18d3639);
+const XDISPLAY_HDR: Guid = g(0x03f0fe74_fdd9_4e5c_b630_f9339c47acc5);
 const XGAMEEVENT: Guid = g(0xbbfbdcc7_bfe7_409b_a5ca_edf054960b4d);
 pub const XNETWORKING: Guid = g(0x37e56907_2f10_41e8_b72f_36edb185331a);
 pub const XERROR: Guid = g(0x8ca467f7_22e8_4096_8456_bb8aa13f79d8);
@@ -530,6 +531,8 @@ fn classes() -> Vec<Class> {
                 impls: vec![("XLaunchUri", launch_uri as usize), ("XDisplayAcquireTimeoutDeferral", display_deferral as usize), ("XDisplayCloseTimeoutDeferralHandle", nothing as usize)],
                 forward: &[],
             },
+            // the PC runtime ends the process when asked for this class (a fail-fast inside its QueryApiImpl)
+            Class { name: "XDisplay (HDR)", clsid: XDISPLAY_HDR, impls: vec![("XDisplayTryEnableHdrMode", display_hdr as usize)], forward: &[] },
             // telemetry: offline, accepted and dropped
             Class { name: "XGameEvent", clsid: XGAMEEVENT, impls: vec![("XGameEventWrite", ok as usize)], forward: &[] },
             Class { name: "XNetworking", clsid: XNETWORKING, impls: xnetworking(), forward: &[] },
@@ -998,6 +1001,12 @@ unsafe extern "system" fn display_deferral(out: *mut usize) -> HRESULT {
     S_OK
 }
 
+/// XDisplayTryEnableHdrMode(preference, info) → XDisplayHdrModeResult: XCL presents in SDR, so
+/// the answer is Disabled (2); `info` describes an enabled mode only and is left as it is.
+unsafe extern "system" fn display_hdr(_preference: u32, _info: *mut c_void) -> u32 {
+    2
+}
+
 static PICTURE_ID: u8 = 0;
 
 /// XUserGetGamerPictureAsync(user, size, async): a plain picture (PNG) of the requested size
@@ -1409,6 +1418,20 @@ mod tests {
         assert_eq!(XUSER.to_string(), "01acd177-91f9-4763-a38e-ccbb55ce32e0");
         let b: [u8; 16] = unsafe { std::mem::transmute(XUSER) };
         assert_eq!(&b[..4], &[0x77, 0xd1, 0xac, 0x01]);
+    }
+
+    /// The title's HDR question is answered by XCL (the PC runtime ends the process when asked
+    /// for the class): HDR is disabled, and a missing `info` is fine.
+    #[test]
+    fn hdr_mode_is_answered_by_xcl_as_disabled() {
+        unsafe {
+            let (c, i, s) = slot_in_table("XDisplayTryEnableHdrMode");
+            assert!(own(&c, &i).is_some());
+            let (hr, o) = query(c, i);
+            assert_eq!(hr, S_OK);
+            let try_enable: unsafe extern "system" fn(*mut c_void, u32, *mut c_void) -> u32 = slot(o, s);
+            assert_eq!(try_enable(o, 0, std::ptr::null_mut()), 2);
+        }
     }
 
     fn slot_in_table(name: &str) -> (Guid, Guid, usize) {
