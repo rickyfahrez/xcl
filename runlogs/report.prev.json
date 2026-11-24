@@ -46,32 +46,32 @@
     },
     {
       "name": "vcruntime140.dll",
-      "base": "0x24b5b960000",
+      "base": "0x17ba5ec0000",
       "size": "0x1b000"
     },
     {
       "name": "vcruntime140_1.dll",
-      "base": "0x24b5b9a0000",
+      "base": "0x17ba5ef0000",
       "size": "0xc000"
     },
     {
       "name": "xboxbvhbuilder.dll",
-      "base": "0x24b645b0000",
+      "base": "0x17ba75c0000",
       "size": "0xde000"
     },
     {
       "name": "amd_fidelityfx_loader_xbox.dll",
-      "base": "0x24b5b9b0000",
+      "base": "0x17ba5f00000",
       "size": "0x8000"
     },
     {
       "name": "libhttpclient.gdk.dll",
-      "base": "0x24b64690000",
+      "base": "0x17baeb60000",
       "size": "0xf4000"
     },
     {
       "name": "bink2scarlett.dll",
-      "base": "0x24b5b9c0000",
+      "base": "0x17baec60000",
       "size": "0x44000"
     }
   ],
@@ -131,7 +131,7 @@
     "uma_used_kb": 65536,
     "uma_gpu_va": "0x300000000",
     "uma_error": "",
-    "uma_import_check": "ok, 1 window(s), 80819 µs",
+    "uma_import_check": "ok, 1 window(s), 43213 µs",
     "translated_pipelines": 0,
     "translation_errors": [],
     "background_pipelines": [
