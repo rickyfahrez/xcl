@@ -3,21 +3,8 @@
   "title": "RockstarGamesInc.28872443D20A7",
   "exe": "C:\\Users\\ricky\\Downloads\\Compressed\\GTA6.Xbox.v1.0.2.1-CYBERLEEK\\game_scarlett_master.exe",
   "crash": null,
-  "exit_code": 3221226505,
-  "environment": [
-    {
-      "level": "ok",
-      "what": "GPU: NVIDIA GeForce RTX 5060 Ti (16050 MiB VRAM)"
-    },
-    {
-      "level": "note",
-      "what": "waves of 32–32 lanes: the console's 64-lane programs run as two 32-lane halves (slower; vertex / pixel shaders that read lanes 32–63 can differ)"
-    },
-    {
-      "level": "ok",
-      "what": "DXC 1.9.2602.17 (21d28f72): C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64"
-    }
-  ],
+  "exit_code": null,
+  "environment": [],
   "imports_by_source": {
     "game-dll:amd_fidelityfx_loader_xbox.dll": 4,
     "game-dll:bink2scarlett.dll": 23,
@@ -59,32 +46,32 @@
     },
     {
       "name": "vcruntime140.dll",
-      "base": "0x27f10be0000",
+      "base": "0x17ba5ec0000",
       "size": "0x1b000"
     },
     {
       "name": "vcruntime140_1.dll",
-      "base": "0x27f10c10000",
+      "base": "0x17ba5ef0000",
       "size": "0xc000"
     },
     {
       "name": "xboxbvhbuilder.dll",
-      "base": "0x27f197f0000",
+      "base": "0x17ba75c0000",
       "size": "0xde000"
     },
     {
       "name": "amd_fidelityfx_loader_xbox.dll",
-      "base": "0x27f10c20000",
+      "base": "0x17ba5f00000",
       "size": "0x8000"
     },
     {
       "name": "libhttpclient.gdk.dll",
-      "base": "0x27f198d0000",
+      "base": "0x17baeb60000",
       "size": "0xf4000"
     },
     {
       "name": "bink2scarlett.dll",
-      "base": "0x27f122e0000",
+      "base": "0x17baec60000",
       "size": "0x44000"
     }
   ],
@@ -115,17 +102,17 @@
     "recomp_dxc_failed": 0
   },
   "dxc": {
-    "dir": "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64",
+    "dir": "",
     "dxcompiler": {
-      "file_version": "1.9.2602.17",
-      "major": 1,
-      "minor": 9,
-      "commit": "21d28f72"
+      "file_version": "",
+      "major": 0,
+      "minor": 0,
+      "commit": ""
     },
     "dxil": {
-      "file_version": "1.9.2602.17",
-      "major": 1,
-      "minor": 9,
+      "file_version": "",
+      "major": 0,
+      "minor": 0,
       "commit": ""
     }
   },
@@ -144,7 +131,7 @@
     "uma_used_kb": 65536,
     "uma_gpu_va": "0x300000000",
     "uma_error": "",
-    "uma_import_check": "ok, 1 window(s), 26476 µs",
+    "uma_import_check": "ok, 1 window(s), 43213 µs",
     "translated_pipelines": 0,
     "translation_errors": [],
     "background_pipelines": [
