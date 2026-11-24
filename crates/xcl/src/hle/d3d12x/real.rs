@@ -4893,6 +4893,7 @@ unsafe fn queue_dispatch(slot: usize, this: *mut c_void, a1: usize, a2: usize, a
     const PC_TIMESTAMP_FREQUENCY: usize = 16;
     const PC_CLOCK_CALIBRATION: usize = 17;
     const PC_GET_DESC: usize = 18;
+    super::list_x::trace_queue_call(this as usize, slot, a1, a2);
     if (slot == 16 || slot == 17) && is_fence(a1) && !QUEUE_SHIFTED.swap(true, Ordering::AcqRel) {
         crate::xlog_info!("D3D12.X: the title's runtime has the newer console layouts (queue: Signal #16, PresentX #32; command list: CopyTextureRegionX #85 – a fence passed to queue #{slot})");
     }
@@ -5005,11 +5006,14 @@ unsafe extern "system" fn q_signal_x(this: *mut c_void, fence: *mut c_void, valu
 unsafe extern "system" fn fence_signal(this: *mut c_void, value: u64) -> HRESULT {
     let f: unsafe extern "system" fn(*mut c_void, u64) -> HRESULT = std::mem::transmute(orig_fn(this, slot_of(this, "Signal")));
     let hr = f(this, value);
+    super::list_x::trace_fence_signal(this as usize, value);
     super::fence_x::note_cpu_signal(this as usize);
     hr
 }
 
 unsafe extern "system" fn q_execute_command_lists(this: *mut c_void, n: u32, lists: *const *mut c_void) {
+    // (method #10 in the trace: ExecuteCommandLists, also when the title called ExecuteCommandListsX)
+    super::list_x::trace_queue_call(this as usize, 10, n as usize, 0);
     type F = unsafe extern "system" fn(*mut c_void, u32, *const *mut c_void);
     let f: F = std::mem::transmute(orig_fn(this, slot_of(this, "ExecuteCommandLists")));
     if n == 0 || lists.is_null() {

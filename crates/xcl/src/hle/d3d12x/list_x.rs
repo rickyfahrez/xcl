@@ -887,6 +887,11 @@ fn trace_waits() -> bool {
 
 const TRACE_KEPT: usize = 8192;
 const TRACE_EXECUTE: &str = "execute";
+/// a title's call of a command queue method: `list` is the queue, `slot` the method's slot,
+/// `va` / `value` its first two arguments
+const TRACE_QUEUE: &str = "queue";
+/// Fence::Signal from the CPU: `list` is the fence
+const TRACE_FENCE_SIGNAL: &str = "fence signalled by the CPU";
 
 struct TraceEvent {
     t: f64,
@@ -895,11 +900,21 @@ struct TraceEvent {
     list: usize,
     va: u64,
     value: u64,
+    slot: usize,
 }
 
 impl TraceEvent {
+    /// an immediate write or a memory wait (the events a wait's dump is about)
+    fn memory(&self) -> bool {
+        self.what != TRACE_EXECUTE && self.what != TRACE_QUEUE && self.what != TRACE_FENCE_SIGNAL
+    }
+
     fn line(&self) -> String {
-        if self.what == TRACE_EXECUTE {
+        if self.what == TRACE_QUEUE {
+            format!("  [{:9.3}][{:5}] queue {:#x} method #{} ({:#x}, {:#x})", self.t, self.thread, self.list, self.slot, self.va, self.value)
+        } else if self.what == TRACE_FENCE_SIGNAL {
+            format!("  [{:9.3}][{:5}] fence {:#x} signalled by the CPU with {:#x}", self.t, self.thread, self.list, self.value)
+        } else if self.what == TRACE_EXECUTE {
             format!("  [{:9.3}][{:5}] execute list {:#x}", self.t, self.thread, self.list)
         } else {
             format!("  [{:9.3}][{:5}] {} {:#x} = {:#x} on list {:#x}", self.t, self.thread, self.what, self.va, self.value, self.list)
@@ -910,6 +925,35 @@ impl TraceEvent {
 static TRACE: Mutex<std::collections::VecDeque<TraceEvent>> = Mutex::new(std::collections::VecDeque::new());
 
 fn trace(what: &'static str, list: usize, va: u64, value: u64) {
+    trace_slot(what, list, va, value, 0);
+}
+
+/// A title's call of command queue method `slot` (Signal, Wait, SignalX, PresentX, the ones
+/// XCL does not model …) with its first two arguments.
+pub(super) fn trace_queue_call(queue: usize, slot: usize, a1: usize, a2: usize) {
+    trace_slot(TRACE_QUEUE, queue, a1 as u64, a2 as u64, slot);
+}
+
+/// Fence::Signal from the CPU.
+pub(super) fn trace_fence_signal(fence: usize, value: u64) {
+    trace_slot(TRACE_FENCE_SIGNAL, fence, 0, value, 0);
+}
+
+/// The process is ending on an unhandled exception: under `XCL_TRACE_WAITS` the last 400 kept
+/// events of every kind and each fence's state go to the log (a title that waits for a
+/// completion XCL never gives ends itself; what it queued last is here).
+pub fn dump_trace_at_crash() {
+    if !trace_waits() {
+        return;
+    }
+    let lines: Vec<String> = {
+        let g = TRACE.lock().unwrap_or_else(|e| e.into_inner());
+        g.iter().skip(g.len().saturating_sub(400)).map(TraceEvent::line).collect()
+    };
+    crate::xlog_warn!("D3D12.X: the last {} queue calls, executions, writes and waits before the end:\n{}\n  fences:\n{}", lines.len(), lines.join("\n"), super::fence_x::state_lines().join("\n"));
+}
+
+fn trace_slot(what: &'static str, list: usize, va: u64, value: u64, slot: usize) {
     if !trace_waits() {
         return;
     }
@@ -918,7 +962,7 @@ fn trace(what: &'static str, list: usize, va: u64, value: u64) {
     if g.len() >= TRACE_KEPT {
         g.pop_front();
     }
-    g.push_back(TraceEvent { t: crate::log::uptime(), thread, what, list, va, value });
+    g.push_back(TraceEvent { t: crate::log::uptime(), thread, what, list, va, value, slot });
 }
 
 /// The kept events about a wait that timed out (the first 6 timeouts).
@@ -928,14 +972,14 @@ fn dump_trace(w: &PendingWait) {
         return;
     }
     let g = TRACE.lock().unwrap();
-    let at = |e: &TraceEvent| e.what != TRACE_EXECUTE && e.va < w.va + w.width as u64 && w.va < e.va + 8;
+    let at = |e: &TraceEvent| e.memory() && e.va < w.va + w.width as u64 && w.va < e.va + 8;
     let lists: Vec<usize> = g.iter().filter(|e| at(e)).map(|e| e.list).collect();
     let about: Vec<String> = g
         .iter()
-        .filter(|e| at(e) || (e.what == TRACE_EXECUTE && lists.contains(&e.list)) || (e.what != TRACE_EXECUTE && e.value == w.value))
+        .filter(|e| at(e) || (e.what == TRACE_EXECUTE && lists.contains(&e.list)) || (e.memory() && e.value == w.value))
         .map(TraceEvent::line)
         .collect();
-    let last: Vec<String> = g.iter().filter(|e| e.what != TRACE_EXECUTE).map(TraceEvent::line).collect();
+    let last: Vec<String> = g.iter().filter(|e| e.memory()).map(TraceEvent::line).collect();
     crate::xlog_warn!(
         "D3D12.X: wait trace for {:#x} (want {:#x}): {} events kept; {} about this address, its value or the lists that wrote there (the last 48):\n{}\n  the last 24 writes and waits anywhere:\n{}",
         w.va,

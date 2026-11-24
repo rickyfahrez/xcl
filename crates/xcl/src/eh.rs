@@ -110,6 +110,7 @@ unsafe extern "system" fn unhandled_filter(info: *const EXCEPTION_POINTERS) -> i
         );
         crate::xlog_error!("{msg}");
         crate::report::write_final(Some(msg));
+        crate::hle::d3d12x::list_x::dump_trace_at_crash();
         crate::log::flush();
     }
     match TITLE_FILTER.load(Ordering::Acquire) {

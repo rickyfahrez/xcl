@@ -85,6 +85,20 @@ pub(super) fn note_cpu_signal(fence: usize) {
     }
 }
 
+/// Each fence a queue was told to signal or whose completed value was asked for, for
+/// `XCL_TRACE_WAITS`: the highest value queued, the PC fence's completed value and the cell's.
+pub(super) fn state_lines() -> Vec<String> {
+    let g = FENCES.lock().unwrap_or_else(|e| e.into_inner());
+    g.iter()
+        .flatten()
+        .map(|(&p, f)| {
+            let completed = unsafe { borrowed(p, |f| f.GetCompletedValue()) };
+            let cell = f.cell.map(|c| c.0.load(Ordering::Acquire));
+            format!("  fence {p:#x}: highest value queued {:#x}, completed {completed:x?}, the title's cell {cell:x?}", f.signalled)
+        })
+        .collect()
+}
+
 /// fence #12: the address of its completed value
 pub(super) unsafe extern "system" fn completed_value_address(this: *mut c_void) -> *const u64 {
     let (cell, pending) = {
