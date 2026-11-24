@@ -2,8 +2,8 @@
   "xcl_version": "0.1.0",
   "title": "RockstarGamesInc.28872443D20A7",
   "exe": "C:\\Users\\ricky\\Downloads\\Compressed\\GTA6.Xbox.v1.0.2.1-CYBERLEEK\\game_scarlett_master.exe",
-  "crash": null,
-  "exit_code": 3221226505,
+  "crash": "unhandled exception 0xc0000005 in game_scarlett_master.exe+0x23cf683 (write at address 0x0) rax=0x0 rbx=0x0 rcx=0x18b46c5c348 rdx=0x1 rsi=0x5abf00fce8 rdi=0x19de3f84a4e rbp=0x0 r8=0x18b4dee8c40 r9=0x18b4dee8e20 r10=0x18b4dee8ad8 r11=0x18b4dee8c40 r12=0x19d97a644a1 r13=0x146845c28 r14=0x7ffeff184670 r15=0x19dd2236aad rsp=0x5abf00fc70; on the stack: game_scarlett_master.exe+0x4e4ba89, game_scarlett_master.exe+0x2215c35, game_scarlett_master.exe+0x71b9a20, game_scarlett_master.exe+0x2215eca",
+  "exit_code": 3221225477,
   "environment": [
     {
       "level": "ok",
@@ -45,7 +45,68 @@
       "function": "XMemIsToolsMemAvailable"
     }
   ],
-  "called_stubs": [],
+  "called_stubs": [
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12CommandAllocator::#9 (not on PC)",
+      "calls": 3189,
+      "first_caller": "game_scarlett_master.exe+0x188501"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#126 (not on PC)",
+      "calls": 3087,
+      "first_caller": "game_scarlett_master.exe+0x3263e"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#142 (not on PC)",
+      "calls": 3087,
+      "first_caller": "game_scarlett_master.exe+0x329e9"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#75 (console extension)",
+      "calls": 3087,
+      "first_caller": "game_scarlett_master.exe+0x32820"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12CommandQueue::#31 (newer layout)",
+      "calls": 370,
+      "first_caller": "0x0"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#101 (not on PC)",
+      "calls": 12,
+      "first_caller": "game_scarlett_master.exe+0x50a6657"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#131 (not on PC)",
+      "calls": 9,
+      "first_caller": "game_scarlett_master.exe+0x2478bc5"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#131 (not on PC)",
+      "calls": 4,
+      "first_caller": "game_scarlett_master.exe+0x2478cba"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#132 (not on PC)",
+      "calls": 4,
+      "first_caller": "game_scarlett_master.exe+0x2478c99"
+    },
+    {
+      "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#132 (not on PC)",
+      "calls": 1,
+      "first_caller": "game_scarlett_master.exe+0x2478ba4"
+    }
+  ],
   "modules": [
     {
       "name": "game_scarlett_master.exe",
@@ -59,32 +120,32 @@
     },
     {
       "name": "vcruntime140.dll",
-      "base": "0x23f94f70000",
+      "base": "0x17ebbfe0000",
       "size": "0x1b000"
     },
     {
       "name": "vcruntime140_1.dll",
-      "base": "0x23f94f90000",
+      "base": "0x17ebd9f0000",
       "size": "0xc000"
     },
     {
       "name": "xboxbvhbuilder.dll",
-      "base": "0x23f9db10000",
+      "base": "0x17ec5060000",
       "size": "0xde000"
     },
     {
       "name": "amd_fidelityfx_loader_xbox.dll",
-      "base": "0x23f94fa0000",
+      "base": "0x17ebda00000",
       "size": "0x8000"
     },
     {
       "name": "libhttpclient.gdk.dll",
-      "base": "0x23f9dbf0000",
+      "base": "0x17ec5140000",
       "size": "0xf4000"
     },
     {
       "name": "bink2scarlett.dll",
-      "base": "0x23f9dcf0000",
+      "base": "0x17ebda10000",
       "size": "0x44000"
     }
   ],
@@ -94,18 +155,1901 @@
     "whiteouts": []
   },
   "shaders": {
-    "unique": 0,
-    "submitted": 0,
-    "by_kind": {},
+    "unique": 19211,
+    "submitted": 274780,
+    "by_kind": {
+      "dxbc": 110,
+      "xbox-native": 19101
+    },
     "unknown_parts": {},
-    "by_stage": {},
+    "by_stage": {
+      "as": 25479,
+      "cs": 2742,
+      "ps": 134404,
+      "rootsig": 111,
+      "vs": 112044
+    },
     "rejected_pointers": 0,
     "dump_dir": "C:\\Users\\ricky\\AppData\\Local\\XCL\\RockstarGamesInc.28872443D20A7\\shaders",
-    "xbox_hw_stages": {},
+    "xbox_hw_stages": {
+      "CS": 2734,
+      "NGG": 6685,
+      "PS": 8520,
+      "VS": 1162
+    },
     "xbox_errors": 0,
-    "rdna2_instructions": 0,
+    "rdna2_instructions": 37858990,
     "rdna2_undecoded_dwords": 0,
-    "rdna2_mnemonics": [],
+    "rdna2_mnemonics": [
+      [
+        "v_mul_legacy_f32",
+        5118044
+      ],
+      [
+        "v_fmac_f32",
+        3438266
+      ],
+      [
+        "s_waitcnt",
+        2118538
+      ],
+      [
+        "v_fma_f32",
+        2052748
+      ],
+      [
+        "v_mov_b32",
+        1843998
+      ],
+      [
+        "v_cndmask_b32",
+        1276838
+      ],
+      [
+        "s_mov_b32",
+        1243634
+      ],
+      [
+        "v_sub_f32",
+        1227264
+      ],
+      [
+        "v_add_f32",
+        1126947
+      ],
+      [
+        "s_load_dwordx4",
+        805759
+      ],
+      [
+        "s_nop",
+        610503
+      ],
+      [
+        "v_and_b32",
+        543500
+      ],
+      [
+        "s_cbranch_execz",
+        538276
+      ],
+      [
+        "s_buffer_load_dword",
+        525269
+      ],
+      [
+        "s_and_b32",
+        485006
+      ],
+      [
+        "s_mov_b64",
+        484602
+      ],
+      [
+        "s_add_i32",
+        446804
+      ],
+      [
+        "v_fma_mix_f32",
+        416819
+      ],
+      [
+        "v_rcp_f32",
+        381993
+      ],
+      [
+        "s_buffer_load_dwordx4",
+        374750
+      ],
+      [
+        "v_max_f32",
+        348576
+      ],
+      [
+        "v_mul_f32",
+        339659
+      ],
+      [
+        "v_add_nc_u32",
+        293784
+      ],
+      [
+        "s_load_dwordx8",
+        291098
+      ],
+      [
+        "v_lshrrev_b32",
+        258821
+      ],
+      [
+        "v_cvt_f32_u32",
+        247970
+      ],
+      [
+        "buffer_load_dword",
+        247102
+      ],
+      [
+        "v_cmp_eq_u32",
+        232751
+      ],
+      [
+        "v_subrev_f32",
+        231757
+      ],
+      [
+        "s_cmp_eq_u32",
+        229352
+      ],
+      [
+        "s_lshl_b32",
+        227199
+      ],
+      [
+        "v_rsq_f32",
+        226382
+      ],
+      [
+        "v_mac_f32",
+        224077
+      ],
+      [
+        "s_lshr_b32",
+        210550
+      ],
+      [
+        "v_cmp_lt_f32",
+        208412
+      ],
+      [
+        "v_cvt_f32_ubyte0",
+        198819
+      ],
+      [
+        "s_or_b32",
+        194305
+      ],
+      [
+        "v_readfirstlane_b32",
+        189089
+      ],
+      [
+        "v_mad_u32_u24",
+        185301
+      ],
+      [
+        "v_cmp_gt_f32",
+        184262
+      ],
+      [
+        "v_sqrt_f32",
+        177628
+      ],
+      [
+        "s_buffer_load_dwordx2",
+        164816
+      ],
+      [
+        "image_sample_lz",
+        164540
+      ],
+      [
+        "s_branch",
+        154242
+      ],
+      [
+        "s_cbranch_scc1",
+        152738
+      ],
+      [
+        "v_cvt_u32_f32",
+        152345
+      ],
+      [
+        "s_and_b64",
+        150571
+      ],
+      [
+        "v_mul_lo_u32",
+        149797
+      ],
+      [
+        "s_and_saveexec_b32",
+        147831
+      ],
+      [
+        "v_nop",
+        147328
+      ],
+      [
+        "s_cselect_b32",
+        142582
+      ],
+      [
+        "v_exp_f32",
+        136669
+      ],
+      [
+        "v_cmp_le_f32",
+        136525
+      ],
+      [
+        "v_cmpx_eq_u32",
+        136008
+      ],
+      [
+        "s_cbranch_vccnz",
+        134573
+      ],
+      [
+        "buffer_load_dwordx4",
+        126340
+      ],
+      [
+        "v_mad_f32",
+        125827
+      ],
+      [
+        "v_bfe_u32",
+        123947
+      ],
+      [
+        "v_lshlrev_b32",
+        122552
+      ],
+      [
+        "v_cvt_f32_ubyte1",
+        110206
+      ],
+      [
+        "s_movk_i32",
+        109658
+      ],
+      [
+        "s_and_saveexec_b64",
+        109485
+      ],
+      [
+        "s_andn2_b64",
+        106078
+      ],
+      [
+        "s_cmp_lg_u32",
+        101442
+      ],
+      [
+        "s_andn2_b32",
+        101262
+      ],
+      [
+        "v_cvt_f32_ubyte2",
+        100835
+      ],
+      [
+        "exp",
+        98053
+      ],
+      [
+        "v_min_f32",
+        97656
+      ],
+      [
+        "v_xor_b32",
+        96258
+      ],
+      [
+        "s_cselect_b64",
+        92121
+      ],
+      [
+        "s_or_b64",
+        90351
+      ],
+      [
+        "v_interp_p1_f32",
+        87335
+      ],
+      [
+        "v_interp_p2_f32",
+        87335
+      ],
+      [
+        "s_mul_i32",
+        83105
+      ],
+      [
+        "s_cbranch_scc0",
+        82063
+      ],
+      [
+        "ds_swizzle_b32",
+        81602
+      ],
+      [
+        "v_log_f32",
+        80532
+      ],
+      [
+        "v_cmp_ne_u32",
+        79344
+      ],
+      [
+        "v_readlane_b32",
+        76477
+      ],
+      [
+        "v_cvt_f32_f16",
+        74330
+      ],
+      [
+        "s_bfe_u32",
+        74049
+      ],
+      [
+        "v_fract_f32",
+        72798
+      ],
+      [
+        "image_sample",
+        72759
+      ],
+      [
+        "s_cbranch_execnz",
+        70652
+      ],
+      [
+        "s_buffer_load_dwordx8",
+        67723
+      ],
+      [
+        "v_cmpx_lt_f32",
+        65655
+      ],
+      [
+        "v_or_b32",
+        61785
+      ],
+      [
+        "v_cvt_f32_i32",
+        61081
+      ],
+      [
+        "buffer_load_format_x",
+        60833
+      ],
+      [
+        "v_cvt_f32_ubyte3",
+        58253
+      ],
+      [
+        "s_xor_b32",
+        57511
+      ],
+      [
+        "v_cvt_i32_f32",
+        56526
+      ],
+      [
+        "image_load",
+        53761
+      ],
+      [
+        "v_lshl_add_u32",
+        52774
+      ],
+      [
+        "v_med3_f32",
+        52342
+      ],
+      [
+        "v_cmp_le_u32",
+        52121
+      ],
+      [
+        "s_andn2_wrexec_b32",
+        51291
+      ],
+      [
+        "v_cmp_eq_f32",
+        50725
+      ],
+      [
+        "s_add_u32",
+        50248
+      ],
+      [
+        "v_cmpx_ne_u32",
+        49917
+      ],
+      [
+        "v_cmp_ge_f32",
+        48405
+      ],
+      [
+        "buffer_load_dwordx2",
+        46579
+      ],
+      [
+        "s_buffer_load_dwordx16",
+        45493
+      ],
+      [
+        "v_cmp_lg_f32",
+        45373
+      ],
+      [
+        "v_interp_p1ll_f16",
+        45182
+      ],
+      [
+        "v_interp_p2_f16",
+        45182
+      ],
+      [
+        "v_max3_f32",
+        44643
+      ],
+      [
+        "buffer_load_dwordx3",
+        44233
+      ],
+      [
+        "v_cmpx_gt_f32",
+        43717
+      ],
+      [
+        "v_fmaak_f32",
+        42279
+      ],
+      [
+        "v_cvt_pkrtz_f16_f32",
+        40347
+      ],
+      [
+        "s_xor_b64",
+        39629
+      ],
+      [
+        "v_trunc_f32",
+        39603
+      ],
+      [
+        "image_sample_l",
+        38630
+      ],
+      [
+        "v_floor_f32",
+        36555
+      ],
+      [
+        "v_cmp_class_f32",
+        32763
+      ],
+      [
+        "v_sub_nc_u32",
+        30712
+      ],
+      [
+        "v_cmpx_lg_f32",
+        29682
+      ],
+      [
+        "v_writelane_b32",
+        29377
+      ],
+      [
+        "v_or3_b32",
+        29310
+      ],
+      [
+        "s_cbranch_vccz",
+        29291
+      ],
+      [
+        "v_rcp_iflag_f32",
+        29153
+      ],
+      [
+        "v_cvt_f16_f32",
+        28434
+      ],
+      [
+        "v_mov_b32_dpp",
+        27789
+      ],
+      [
+        "v_subrev_nc_u32",
+        27402
+      ],
+      [
+        "s_setreg_imm32_b32",
+        26278
+      ],
+      [
+        "v_sin_f32",
+        26195
+      ],
+      [
+        "v_add3_u32",
+        25402
+      ],
+      [
+        "s_endpgm",
+        25072
+      ],
+      [
+        "v_pack_b32_f16",
+        23653
+      ],
+      [
+        "s_cmp_lt_u32",
+        23264
+      ],
+      [
+        "v_fma_legacy_f32",
+        22823
+      ],
+      [
+        "v_fma_mixlo_f16",
+        22692
+      ],
+      [
+        "tbuffer_load_format_xy",
+        22372
+      ],
+      [
+        "v_med3_i32",
+        21342
+      ],
+      [
+        "s_brev_b32",
+        21295
+      ],
+      [
+        "v_cos_f32",
+        20214
+      ],
+      [
+        "s_cmp_gt_u32",
+        20142
+      ],
+      [
+        "v_cmpx_gt_u32",
+        19775
+      ],
+      [
+        "s_inst_prefetch",
+        19101
+      ],
+      [
+        "v_cmp_gt_u32",
+        18643
+      ],
+      [
+        "v_cubema_f32",
+        18430
+      ],
+      [
+        "v_cubesc_f32",
+        18430
+      ],
+      [
+        "v_cubetc_f32",
+        18430
+      ],
+      [
+        "v_cubeid_f32",
+        18345
+      ],
+      [
+        "v_lshl_or_b32",
+        17474
+      ],
+      [
+        "s_addk_i32",
+        16895
+      ],
+      [
+        "s_andn2_wrexec_b64",
+        16836
+      ],
+      [
+        "v_or_b32_dpp8",
+        16716
+      ],
+      [
+        "v_mul_hi_u32",
+        16509
+      ],
+      [
+        "tbuffer_load_format_xyzw",
+        16032
+      ],
+      [
+        "v_mul_u32_u24",
+        15350
+      ],
+      [
+        "v_min_u32",
+        15298
+      ],
+      [
+        "s_wqm_b64",
+        14480
+      ],
+      [
+        "v_cmpx_gt_i32",
+        14455
+      ],
+      [
+        "v_and_or_b32",
+        14183
+      ],
+      [
+        "s_barrier",
+        14057
+      ],
+      [
+        "image_sample_d",
+        13194
+      ],
+      [
+        "image_sample_c_lz",
+        12783
+      ],
+      [
+        "s_sub_i32",
+        12414
+      ],
+      [
+        "v_cvt_f32_u32_sdwa",
+        12255
+      ],
+      [
+        "v_cmpx_lt_i32",
+        12249
+      ],
+      [
+        "v_rndne_f32",
+        11864
+      ],
+      [
+        "v_add_co_ci_u32",
+        11537
+      ],
+      [
+        "v_and_b32_sdwa",
+        11171
+      ],
+      [
+        "v_add_nc_u32_sdwa",
+        10250
+      ],
+      [
+        "s_mul_hi_u32",
+        10212
+      ],
+      [
+        "v_add_co_u32",
+        9877
+      ],
+      [
+        "image_gather4_lz",
+        9854
+      ],
+      [
+        "s_ff1_i32_b32",
+        9455
+      ],
+      [
+        "s_or_saveexec_b32",
+        9262
+      ],
+      [
+        "global_load_dword",
+        9258
+      ],
+      [
+        "v_bcnt_u32_b32",
+        9228
+      ],
+      [
+        "v_bfi_b32",
+        9128
+      ],
+      [
+        "v_permlanex16_b32",
+        8875
+      ],
+      [
+        "v_perm_b32",
+        8734
+      ],
+      [
+        "v_bfrev_b32",
+        8733
+      ],
+      [
+        "buffer_load_format_xyz",
+        8647
+      ],
+      [
+        "v_min3_f32",
+        8548
+      ],
+      [
+        "v_mbcnt_lo_u32_b32",
+        8474
+      ],
+      [
+        "v_cmp_gt_i32",
+        8107
+      ],
+      [
+        "v_mbcnt_hi_u32_b32",
+        7738
+      ],
+      [
+        "v_madak_f32",
+        7649
+      ],
+      [
+        "s_cmp_ge_u32",
+        7553
+      ],
+      [
+        "image_store",
+        7502
+      ],
+      [
+        "s_addc_u32",
+        7245
+      ],
+      [
+        "s_cmp_lt_i32",
+        7136
+      ],
+      [
+        "v_ashrrev_i32",
+        7068
+      ],
+      [
+        "s_sendmsg",
+        6685
+      ],
+      [
+        "v_cmpx_eq_f32",
+        6568
+      ],
+      [
+        "v_lshlrev_b64",
+        6391
+      ],
+      [
+        "s_bcnt1_i32_b32",
+        6288
+      ],
+      [
+        "v_cmp_le_i32",
+        6159
+      ],
+      [
+        "buffer_store_dword",
+        5997
+      ],
+      [
+        "s_cmp_gt_i32",
+        5939
+      ],
+      [
+        "v_cmpx_le_f32",
+        5874
+      ],
+      [
+        "v_or_b32_dpp",
+        5572
+      ],
+      [
+        "ds_write2_b32",
+        5552
+      ],
+      [
+        "v_cmpx_ge_f32",
+        5382
+      ],
+      [
+        "v_cmp_neq_f32",
+        5351
+      ],
+      [
+        "s_cmp_le_u32",
+        5224
+      ],
+      [
+        "s_mulk_i32",
+        4971
+      ],
+      [
+        "s_getpc_b64",
+        4957
+      ],
+      [
+        "v_cvt_f32_f16_sdwa",
+        4930
+      ],
+      [
+        "v_interp_mov_f32",
+        4869
+      ],
+      [
+        "v_cmp_lt_u32",
+        4854
+      ],
+      [
+        "ds_read2_b32",
+        4788
+      ],
+      [
+        "buffer_store_format_xyzw",
+        4758
+      ],
+      [
+        "v_cvt_f16_f32_sdwa",
+        4637
+      ],
+      [
+        "s_bfe_i32",
+        4529
+      ],
+      [
+        "v_cmp_ge_u32",
+        4416
+      ],
+      [
+        "v_cmp_nlt_f32",
+        4330
+      ],
+      [
+        "v_cmp_eq_u64",
+        4059
+      ],
+      [
+        "v_cmpx_lt_u32",
+        4002
+      ],
+      [
+        "v_max_i32",
+        3990
+      ],
+      [
+        "v_ceil_f32",
+        3906
+      ],
+      [
+        "v_cmp_gt_u32_sdwa",
+        3753
+      ],
+      [
+        "s_cmpk_eq_i32",
+        3736
+      ],
+      [
+        "s_wqm_b32",
+        3712
+      ],
+      [
+        "v_cmp_eq_u32_sdwa",
+        3487
+      ],
+      [
+        "v_ffbl_b32",
+        3458
+      ],
+      [
+        "v_add_lshl_u32",
+        3242
+      ],
+      [
+        "buffer_atomic_add",
+        3231
+      ],
+      [
+        "v_min_i32",
+        2876
+      ],
+      [
+        "s_not_b32",
+        2851
+      ],
+      [
+        "v_xad_u32",
+        2782
+      ],
+      [
+        "v_cmp_lt_i32",
+        2779
+      ],
+      [
+        "v_cmp_nle_f32",
+        2630
+      ],
+      [
+        "v_bfe_i32",
+        2612
+      ],
+      [
+        "v_min_u32_dpp8",
+        2520
+      ],
+      [
+        "ds_write_b32",
+        2472
+      ],
+      [
+        "v_max_u32_dpp8",
+        2436
+      ],
+      [
+        "buffer_load_format_xy",
+        2432
+      ],
+      [
+        "v_max_u32",
+        2407
+      ],
+      [
+        "s_lshl_b64",
+        2285
+      ],
+      [
+        "tbuffer_load_format_xyz",
+        2198
+      ],
+      [
+        "ds_read_b32",
+        2141
+      ],
+      [
+        "v_cmpx_lt_u32_sdwa",
+        2132
+      ],
+      [
+        "s_or_saveexec_b64",
+        2107
+      ],
+      [
+        "v_or_b32_sdwa",
+        2032
+      ],
+      [
+        "v_med3_u32",
+        1978
+      ],
+      [
+        "s_load_dword",
+        1939
+      ],
+      [
+        "v_xor_b32_sdwa",
+        1939
+      ],
+      [
+        "v_add_nc_u32_dpp",
+        1899
+      ],
+      [
+        "v_min3_u32",
+        1890
+      ],
+      [
+        "v_max3_u32",
+        1870
+      ],
+      [
+        "v_cvt_f32_ubyte0_sdwa",
+        1763
+      ],
+      [
+        "v_cmpx_gt_u32_sdwa",
+        1732
+      ],
+      [
+        "v_cmpx_neq_f32",
+        1658
+      ],
+      [
+        "v_fma_mixhi_f16",
+        1515
+      ],
+      [
+        "s_setpc_b64",
+        1450
+      ],
+      [
+        "s_bfm_b32",
+        1447
+      ],
+      [
+        "s_min_u32",
+        1415
+      ],
+      [
+        "buffer_load_format_xyzw",
+        1395
+      ],
+      [
+        "s_max_i32",
+        1326
+      ],
+      [
+        "s_ashr_i32",
+        1276
+      ],
+      [
+        "v_add_nc_u32_dpp8",
+        1221
+      ],
+      [
+        "s_cmpk_eq_u32",
+        1205
+      ],
+      [
+        "v_cvt_pk_u8_f32",
+        1150
+      ],
+      [
+        "buffer_store_dwordx3",
+        1127
+      ],
+      [
+        "v_alignbit_b32",
+        1105
+      ],
+      [
+        "s_cmp_eq_u64",
+        1023
+      ],
+      [
+        "s_cmpk_lg_i32",
+        969
+      ],
+      [
+        "v_lshrrev_b32_sdwa",
+        946
+      ],
+      [
+        "v_cmp_ngt_f32",
+        923
+      ],
+      [
+        "v_cmpx_ne_u32_sdwa",
+        905
+      ],
+      [
+        "buffer_store_dwordx4",
+        885
+      ],
+      [
+        "v_mul_i32_i24",
+        882
+      ],
+      [
+        "image_sample_b",
+        864
+      ],
+      [
+        "v_add_f32_dpp8",
+        864
+      ],
+      [
+        "s_bcnt1_i32_b64",
+        859
+      ],
+      [
+        "v_min_u32_dpp",
+        840
+      ],
+      [
+        "global_load_dwordx2",
+        825
+      ],
+      [
+        "v_max_u32_dpp",
+        812
+      ],
+      [
+        "s_ff1_i32_b64",
+        801
+      ],
+      [
+        "image_get_resinfo",
+        793
+      ],
+      [
+        "s_cmpk_lt_i32",
+        768
+      ],
+      [
+        "v_min_f32_dpp8",
+        750
+      ],
+      [
+        "image_atomic_umax",
+        720
+      ],
+      [
+        "v_cmpx_eq_i32",
+        717
+      ],
+      [
+        "global_load_dwordx3",
+        695
+      ],
+      [
+        "v_cmpx_eq_u32_sdwa",
+        669
+      ],
+      [
+        "s_bitset1_b32",
+        654
+      ],
+      [
+        "image_load_mip",
+        652
+      ],
+      [
+        "v_cmpx_nge_f32",
+        644
+      ],
+      [
+        "image_bvh_intersect_ray",
+        638
+      ],
+      [
+        "v_cmp_ne_u32_sdwa",
+        620
+      ],
+      [
+        "buffer_load_format_d16_x",
+        616
+      ],
+      [
+        "v_lshlrev_b32_sdwa",
+        605
+      ],
+      [
+        "v_max_f32_dpp8",
+        597
+      ],
+      [
+        "v_bfm_b32",
+        573
+      ],
+      [
+        "v_cmpx_nle_f32",
+        538
+      ],
+      [
+        "image_atomic_or",
+        526
+      ],
+      [
+        "v_fmac_f16",
+        526
+      ],
+      [
+        "image_atomic_umin",
+        514
+      ],
+      [
+        "v_cvt_u32_f32_sdwa",
+        504
+      ],
+      [
+        "buffer_store_dwordx2",
+        502
+      ],
+      [
+        "image_get_lod",
+        493
+      ],
+      [
+        "v_fma_f16",
+        476
+      ],
+      [
+        "v_add_f16",
+        462
+      ],
+      [
+        "buffer_store_format_d16_xyzw",
+        441
+      ],
+      [
+        "v_pk_fma_f16",
+        430
+      ],
+      [
+        "v_pk_mul_f16",
+        429
+      ],
+      [
+        "v_cmpx_ngt_f32",
+        409
+      ],
+      [
+        "buffer_atomic_umin",
+        402
+      ],
+      [
+        "ds_wrxchg_rtn_b32",
+        397
+      ],
+      [
+        "v_mul_i32_i24_sdwa",
+        397
+      ],
+      [
+        "v_mul_f16",
+        384
+      ],
+      [
+        "s_bitset0_b32",
+        374
+      ],
+      [
+        "v_mov_b32_dpp8",
+        372
+      ],
+      [
+        "v_cmp_lt_f16",
+        368
+      ],
+      [
+        "v_cmp_nge_f32",
+        364
+      ],
+      [
+        "v_lshrrev_b16",
+        363
+      ],
+      [
+        "v_cmpx_lt_i32_sdwa",
+        345
+      ],
+      [
+        "s_swappc_b64",
+        337
+      ],
+      [
+        "s_lshr_b64",
+        332
+      ],
+      [
+        "ds_read2st64_b32",
+        313
+      ],
+      [
+        "v_movrels_b32",
+        312
+      ],
+      [
+        "v_not_b32",
+        306
+      ],
+      [
+        "v_add_f16_sdwa",
+        301
+      ],
+      [
+        "v_cmpx_ge_i32",
+        290
+      ],
+      [
+        "v_add_f32_dpp",
+        288
+      ],
+      [
+        "v_pk_add_f16",
+        281
+      ],
+      [
+        "ds_write2st64_b32",
+        267
+      ],
+      [
+        "v_mul_u32_u24_sdwa",
+        264
+      ],
+      [
+        "global_load_dwordx4",
+        258
+      ],
+      [
+        "v_cmpx_le_i32",
+        257
+      ],
+      [
+        "v_min_f32_dpp",
+        250
+      ],
+      [
+        "s_cmpk_gt_i32",
+        245
+      ],
+      [
+        "tbuffer_load_format_x",
+        237
+      ],
+      [
+        "v_sub_nc_u32_sdwa",
+        233
+      ],
+      [
+        "v_ffbh_u32",
+        222
+      ],
+      [
+        "image_sample_d_cl",
+        221
+      ],
+      [
+        "v_add_f64",
+        216
+      ],
+      [
+        "v_cmpx_lt_f16",
+        213
+      ],
+      [
+        "v_cmp_gt_f16",
+        209
+      ],
+      [
+        "v_cvt_f32_i32_sdwa",
+        206
+      ],
+      [
+        "ds_add_u32",
+        201
+      ],
+      [
+        "v_max_f32_dpp",
+        199
+      ],
+      [
+        "s_cmp_ge_i32",
+        196
+      ],
+      [
+        "v_cmp_ne_u64",
+        192
+      ],
+      [
+        "v_cmp_ge_i32",
+        184
+      ],
+      [
+        "ds_add_rtn_u32",
+        177
+      ],
+      [
+        "image_gather4_l_o",
+        174
+      ],
+      [
+        "s_cmpk_gt_u32",
+        171
+      ],
+      [
+        "v_rsq_f16",
+        171
+      ],
+      [
+        "v_alignbyte_b32",
+        159
+      ],
+      [
+        "v_cmpx_le_u32",
+        159
+      ],
+      [
+        "s_sub_u32",
+        156
+      ],
+      [
+        "s_subb_u32",
+        156
+      ],
+      [
+        "v_mul_f16_sdwa",
+        150
+      ],
+      [
+        "ds_max_u32",
+        147
+      ],
+      [
+        "s_waitcnt_vscnt",
+        141
+      ],
+      [
+        "v_cmpx_ge_u32",
+        132
+      ],
+      [
+        "global_atomic_fmax",
+        129
+      ],
+      [
+        "global_atomic_fmin",
+        129
+      ],
+      [
+        "s_load_dwordx2",
+        112
+      ],
+      [
+        "v_cmp_lt_u32_sdwa",
+        105
+      ],
+      [
+        "s_flbit_i32_b32",
+        100
+      ],
+      [
+        "buffer_load_format_d16_xyzw",
+        99
+      ],
+      [
+        "v_cmp_ne_i32",
+        96
+      ],
+      [
+        "v_sub_f16",
+        93
+      ],
+      [
+        "v_cmp_neq_f16",
+        88
+      ],
+      [
+        "v_subrev_co_ci_u32",
+        87
+      ],
+      [
+        "ds_bpermute_b32",
+        85
+      ],
+      [
+        "v_rcp_f16",
+        83
+      ],
+      [
+        "v_movreld_b32",
+        80
+      ],
+      [
+        "ds_min_u32",
+        78
+      ],
+      [
+        "image_bvh64_intersect_ray",
+        78
+      ],
+      [
+        "buffer_atomic_or",
+        75
+      ],
+      [
+        "ds_read_u16",
+        75
+      ],
+      [
+        "s_max_u32",
+        75
+      ],
+      [
+        "ds_or_b32",
+        71
+      ],
+      [
+        "v_cmpx_gt_f16",
+        60
+      ],
+      [
+        "image_gather4_l",
+        58
+      ],
+      [
+        "image_gather4_lz_o",
+        55
+      ],
+      [
+        "v_cmpx_eq_u64",
+        52
+      ],
+      [
+        "buffer_load_ushort",
+        51
+      ],
+      [
+        "ds_write_b64",
+        50
+      ],
+      [
+        "s_not_b64",
+        49
+      ],
+      [
+        "ds_read_b64",
+        48
+      ],
+      [
+        "buffer_atomic_cmpswap",
+        46
+      ],
+      [
+        "v_lshrrev_b64",
+        44
+      ],
+      [
+        "v_swap_b32",
+        44
+      ],
+      [
+        "buffer_atomic_umax",
+        43
+      ],
+      [
+        "v_mul_hi_i32",
+        42
+      ],
+      [
+        "v_pk_max_f16",
+        42
+      ],
+      [
+        "v_cmpx_eq_u16",
+        41
+      ],
+      [
+        "v_pk_min_f16",
+        38
+      ],
+      [
+        "s_min_i32",
+        37
+      ],
+      [
+        "v_cvt_f32_f64",
+        36
+      ],
+      [
+        "v_cmp_eq_f16",
+        35
+      ],
+      [
+        "ds_write_b16",
+        34
+      ],
+      [
+        "v_subrev_nc_u32_sdwa",
+        34
+      ],
+      [
+        "v_mad_u64_u32",
+        32
+      ],
+      [
+        "s_cmpk_lt_u32",
+        31
+      ],
+      [
+        "v_sub_f16_sdwa",
+        31
+      ],
+      [
+        "buffer_atomic_smax",
+        28
+      ],
+      [
+        "v_cmp_ge_u32_sdwa",
+        27
+      ],
+      [
+        "v_cmpx_ge_f16",
+        27
+      ],
+      [
+        "s_abs_i32",
+        26
+      ],
+      [
+        "v_min_u32_sdwa",
+        26
+      ],
+      [
+        "buffer_store_short",
+        24
+      ],
+      [
+        "v_add_f16_dpp8",
+        24
+      ],
+      [
+        "v_cmp_eq_f16_sdwa",
+        24
+      ],
+      [
+        "v_cmpx_nlt_f32",
+        24
+      ],
+      [
+        "v_cmpx_gt_u64",
+        23
+      ],
+      [
+        "buffer_atomic_smin",
+        22
+      ],
+      [
+        "s_cmp_le_i32",
+        20
+      ],
+      [
+        "v_cmpx_eq_f16",
+        17
+      ],
+      [
+        "v_med3_f16",
+        17
+      ],
+      [
+        "v_mad_i32_i24",
+        16
+      ],
+      [
+        "v_max_u32_sdwa",
+        16
+      ],
+      [
+        "v_cmpx_ne_u64",
+        15
+      ],
+      [
+        "v_rcp_f16_sdwa",
+        15
+      ],
+      [
+        "v_sub_co_ci_u32",
+        14
+      ],
+      [
+        "s_load_dwordx16",
+        13
+      ],
+      [
+        "s_cmp_lg_u64",
+        12
+      ],
+      [
+        "image_atomic_add",
+        11
+      ],
+      [
+        "v_max_f16",
+        11
+      ],
+      [
+        "v_cmpx_ge_u32_sdwa",
+        10
+      ],
+      [
+        "v_min_f16",
+        10
+      ],
+      [
+        "global_store_dwordx4",
+        9
+      ],
+      [
+        "v_cmp_eq_i32",
+        9
+      ],
+      [
+        "v_add_f16_dpp",
+        8
+      ],
+      [
+        "v_sqrt_f16",
+        8
+      ],
+      [
+        "v_xnor_b32",
+        7
+      ],
+      [
+        "global_load_ushort",
+        6
+      ],
+      [
+        "global_store_dwordx3",
+        6
+      ],
+      [
+        "v_and_b32_dpp8",
+        6
+      ],
+      [
+        "v_cmp_gt_u64",
+        6
+      ],
+      [
+        "v_exp_f16",
+        6
+      ],
+      [
+        "v_exp_f16_sdwa",
+        6
+      ],
+      [
+        "v_sqrt_f16_sdwa",
+        5
+      ],
+      [
+        "ds_read_u16_d16_hi",
+        4
+      ],
+      [
+        "ds_write_b16_d16_hi",
+        4
+      ],
+      [
+        "global_atomic_add",
+        4
+      ],
+      [
+        "global_atomic_sub",
+        4
+      ],
+      [
+        "v_ffbh_i32",
+        4
+      ],
+      [
+        "v_max_f16_sdwa",
+        4
+      ],
+      [
+        "v_trunc_f16",
+        3
+      ],
+      [
+        "buffer_atomic_and",
+        2
+      ],
+      [
+        "ds_and_b32",
+        2
+      ],
+      [
+        "ds_cmpst_rtn_b32",
+        2
+      ],
+      [
+        "ds_max_i32",
+        2
+      ],
+      [
+        "v_and_b32_dpp",
+        2
+      ],
+      [
+        "v_cmp_le_f16",
+        2
+      ],
+      [
+        "v_cmp_le_u64",
+        2
+      ],
+      [
+        "v_cmp_nlt_f16",
+        2
+      ],
+      [
+        "v_cmpx_lt_u64",
+        2
+      ],
+      [
+        "v_cos_f16",
+        2
+      ],
+      [
+        "v_max3_f16",
+        2
+      ],
+      [
+        "v_min3_f16",
+        2
+      ],
+      [
+        "v_not_b32_sdwa",
+        2
+      ],
+      [
+        "v_sin_f16",
+        2
+      ],
+      [
+        "buffer_atomic_swap",
+        1
+      ],
+      [
+        "global_store_dword",
+        1
+      ],
+      [
+        "image_atomic_cmpswap",
+        1
+      ],
+      [
+        "s_orn2_b32",
+        1
+      ],
+      [
+        "v_add_nc_u16",
+        1
+      ],
+      [
+        "v_cmp_eq_u16",
+        1
+      ],
+      [
+        "v_cmp_eq_u16_sdwa",
+        1
+      ],
+      [
+        "v_cmpx_le_u32_sdwa",
+        1
+      ],
+      [
+        "v_cmpx_ne_u16",
+        1
+      ],
+      [
+        "v_min_f16_sdwa",
+        1
+      ],
+      [
+        "v_pk_lshlrev_b16",
+        1
+      ],
+      [
+        "v_pk_lshrrev_b16",
+        1
+      ]
+    ],
     "recomp_programs": 0,
     "recomp_complete": 0,
     "recomp_modes": {},
@@ -132,32 +2076,155 @@
   "d3d12": {
     "backend": "real",
     "adapter": "NVIDIA GeForce RTX 5060 Ti (16050 MiB VRAM)",
-    "classes": [],
-    "unknown_iids": [],
+    "classes": [
+      {
+        "interface": "ID3D12Device14",
+        "public_methods": 83,
+        "internal_slots": 47
+      },
+      {
+        "interface": "ID3D12Heap1",
+        "public_methods": 10,
+        "internal_slots": 10
+      },
+      {
+        "interface": "ID3D12CommandQueue",
+        "public_methods": 19,
+        "internal_slots": 16
+      },
+      {
+        "interface": "ID3D12Fence1",
+        "public_methods": 12,
+        "internal_slots": 19
+      },
+      {
+        "interface": "ID3D12CommandAllocator",
+        "public_methods": 9,
+        "internal_slots": 36
+      },
+      {
+        "interface": "ID3D12GraphicsCommandList10",
+        "public_methods": 86,
+        "internal_slots": 512
+      },
+      {
+        "interface": "ID3D12GraphicsCommandList10",
+        "public_methods": 86,
+        "internal_slots": 512
+      },
+      {
+        "interface": "ID3D12Resource2",
+        "public_methods": 17,
+        "internal_slots": 68
+      },
+      {
+        "interface": "ID3D12DescriptorHeap",
+        "public_methods": 11,
+        "internal_slots": 2
+      },
+      {
+        "interface": "ID3D12RootSignature",
+        "public_methods": 8,
+        "internal_slots": 17
+      },
+      {
+        "interface": "ID3D12PipelineState",
+        "public_methods": 9,
+        "internal_slots": 0
+      },
+      {
+        "interface": "ID3D12QueryHeap",
+        "public_methods": 8,
+        "internal_slots": 2
+      },
+      {
+        "interface": "ID3D12CommandSignature",
+        "public_methods": 8,
+        "internal_slots": 1
+      }
+    ],
+    "unknown_iids": [
+      "0742a90b-c387-483f-b946-30a7e4e61458",
+      "0adf7d52-929c-4e61-addb-ffed30de66ef",
+      "433be922-0f1b-4078-850c-16630f94406f",
+      "54ec77fa-1377-44e6-8c32-88fd5f44c84c",
+      "79cf2233-7536-4948-9d36-1e4692dc5760",
+      "85611e73-70a9-490e-9614-a9e302777904",
+      "9b7e4a00-342c-4106-a19f-4f2704f689f0",
+      "9b7e4c0f-342c-4106-a19f-4f2704f689f0",
+      "a2a9f815-4778-40d1-b179-d5d3a1a5f1bc",
+      "aec22fb8-76f3-4639-9be0-28eb43a67a2e",
+      "b898d4fd-b5b3-4ffc-8694-0259864ffcf8",
+      "c0bfa96c-e089-44fb-8eaf-26f8796190da",
+      "cbe8c719-71a3-40ed-a3ad-a05161dcb833",
+      "db6f6ddb-ac77-4e88-8253-819df9bbf140",
+      "ffffffff-1bbe-4d12-afbf-8fdf7e0a87c7"
+    ],
     "fallback_pipelines": 0,
     "failed_pipelines": 0,
     "fallback_root_signatures": 0,
-    "presents": 0,
-    "frame_boundaries": 0,
+    "presents": 3076,
+    "frame_boundaries": 3076,
     "last_frame_dump": null,
     "uma_mb": 512,
-    "uma_used_kb": 65536,
+    "uma_used_kb": 119552,
     "uma_gpu_va": "0x300000000",
     "uma_error": "",
-    "uma_import_check": "ok, 1 window(s), 25920 µs",
-    "translated_pipelines": 0,
-    "translation_errors": [],
+    "uma_import_check": "ok, 1 window(s), 26683 µs",
+    "translated_pipelines": 63,
+    "translation_errors": [
+      "mesh pipeline with its MS d7c434f73b4b811c in the AS slot – refused",
+      "mesh pipeline with its MS 8659e9d5df3e2a9e in the AS slot – refused",
+      "mesh pipeline with its MS 2569510a8f45fc8f in the AS slot – refused",
+      "mesh pipeline with its MS 83391337d7778b85 in the AS slot – refused",
+      "mesh pipeline with its MS 46a7e2c22a768e71 in the AS slot – refused",
+      "mesh pipeline with its MS d8be47673b69a36b in the AS slot – refused",
+      "mesh pipeline with its MS df3117932e08790f in the AS slot – refused",
+      "mesh pipeline with its MS 1975c2a6e0fa0b2a in the AS slot – refused",
+      "mesh pipeline with its MS 2bdc6171bf337731 in the AS slot – refused",
+      "mesh pipeline with its MS 0cc369e804d4ceb9 in the AS slot – refused",
+      "mesh pipeline with its MS ea3683175cc1063c in the AS slot – refused",
+      "mesh pipeline with its MS c26dfbed7866f6ea in the AS slot – refused",
+      "mesh pipeline with its MS 3393dfd087f8cdf1 in the AS slot – refused",
+      "mesh pipeline with its MS b9f81870f0552c0c in the AS slot – refused",
+      "mesh pipeline with its MS bc46bcfef12b8d08 in the AS slot – refused",
+      "mesh pipeline with its MS 46c0a00b11312788 in the AS slot – refused",
+      "mesh pipeline with its MS cbde63c29f5df78b in the AS slot – refused",
+      "mesh pipeline with its MS 32b93f54af6afb43 in the AS slot – refused",
+      "mesh pipeline with its MS 1af98f4aa904699a in the AS slot – refused",
+      "mesh pipeline with its MS 2e81a8f85d8b1866 in the AS slot – refused",
+      "mesh pipeline with its MS 2014fd71a70d5c80 in the AS slot – refused",
+      "mesh pipeline with its MS 3a8635b3e744f405 in the AS slot – refused",
+      "mesh pipeline with its MS e5e2b8a1cc1f670c in the AS slot – refused",
+      "mesh pipeline with its MS f5b22f533b58a920 in the AS slot – refused",
+      "mesh pipeline with its MS 27819c032a1497f1 in the AS slot – refused",
+      "mesh pipeline with its MS 05220b29562bdfbe in the AS slot – refused",
+      "mesh pipeline with its MS c1417364145cbf68 in the AS slot – refused",
+      "mesh pipeline with its MS 5524144c7e9e1bf8 in the AS slot – refused",
+      "mesh pipeline with its MS c1ab6f7d127c5600 in the AS slot – refused",
+      "mesh pipeline with its MS 397ccc5c003d279d in the AS slot – refused",
+      "mesh pipeline with its MS f8b4ec63795b957a in the AS slot – refused",
+      "mesh pipeline with its MS 8c274e3123b82f44 in the AS slot – refused",
+      "mesh pipeline with its MS c505395fd3869f71 in the AS slot – refused",
+      "mesh pipeline with its MS c107ef58496ad61d in the AS slot – refused",
+      "mesh pipeline with its MS 8880e152e9d88cf5 in the AS slot – refused",
+      "mesh pipeline with its MS fb5ee08e44bf0a18 in the AS slot – refused",
+      "mesh pipeline with its MS 29f678c8f3a58712 in the AS slot – refused",
+      "mesh pipeline with its MS 3289b87aa7179b62 in the AS slot – refused",
+      "mesh pipeline with its MS b7108acb0398d3eb in the AS slot – refused",
+      "mesh pipeline with its MS f78880048a6e4d38 in the AS slot – refused"
+    ],
     "background_pipelines": [
+      63,
       0,
-      0,
-      0
+      58701
     ],
     "dxil_cache": {
-      "hits": 0,
-      "misses": 0,
+      "hits": 26,
+      "misses": 79,
       "coalesced_hits": 0,
       "deferred_misses": 0,
-      "compilations": 0,
+      "compilations": 79,
       "compilation_failures": 0,
       "compilation_errors": []
     }
@@ -180,17 +2247,57 @@
     "buffers_silenced": 0,
     "source_voice_errors": 0,
     "dropped_flags": [],
-    "xapu_packets_decoded": 0,
+    "xapu_packets_decoded": 3399,
     "xapu_decode_errors": 0,
-    "xapu_frames": 0,
-    "xapu_nonzero_samples": 0
+    "xapu_frames": 3251184,
+    "xapu_nonzero_samples": 1496375
   },
   "xgameruntime": {
-    "apis": {},
+    "apis": {
+      "01acd177-91f9-4763-a38e-ccbb55ce32e0/01acd177-91f9-4763-a38e-ccbb55ce32e0": "XUser: XCL",
+      "01acd177-91f9-4763-a38e-ccbb55ce32e0/cef4fac0-7676-4a94-a119-4c43f9eb5b74": "XUser: XCL",
+      "03f0fe74-fdd9-4e5c-b630-f9339c47acc5/35f07670-706e-4bfb-9476-090798c5ebf3": "XDisplay (HDR): XCL",
+      "073b7dcb-1fcf-4030-94be-e3c9eb623428/073b7dcb-1fcf-4030-94be-e3c9eb623428": "XAsync: PC",
+      "0dd112ac-7c24-448c-b92b-3960fb5bd30c/b09d803c-2414-4a05-82c6-66dfdc9e9a44": "XStore: unavailable (offline)",
+      "37e56907-2f10-41e8-b72f-36edb185331a/bf2346b2-39af-4658-b5ea-44713c7e83b3": "XNetworking: XCL",
+      "3e241977-6237-41e9-8559-102c2d9983f1/d722b373-8c4d-4692-9e51-d6ad9b37aa7d": "XClosed: PC",
+      "704c3f58-e629-4cc2-b197-30511b996fe2/1bfff3af-f14a-40a3-8e35-9ada906593f9": "XGameSave: XCL",
+      "8836fe87-edb9-4fe3-8dad-05f0d2cd5b40/8836fe87-edb9-4fe3-8dad-05f0d2cd5b40": "XGameRuntimeFeature: XCL",
+      "973a344e-24bf-4d0f-8457-56c534892b29/2549f142-6419-4a06-97b5-931aab7c2f34": "XGame: XCL",
+      "af406016-e850-4aa8-a88d-2f3dcb9dac7e/0b9d556e-ab70-43f4-baa0-9999ac4cb040": "XPackage: XCL",
+      "bbfbdcc7-bfe7-409b-a5ca-edf054960b4d/bbfbdcc7-bfe7-409b-a5ca-edf054960b4d": "XGameEvent: XCL",
+      "e349bd1a-fc20-4e40-b99c-4178cc6b409f/1861cf2e-e18b-4834-a9f5-b4a4e6efb4cf": "XSystem: XCL",
+      "f4faf4d4-2d04-4fce-b3e0-474a713a3e84/41a4e10c-5a7e-41d9-8c37-37bde62a07d6": "XPersistentLocalStorage: XCL"
+    },
     "unimplemented": {}
   },
   "dstorage": {
-    "bcpack_refused": {}
+    "bcpack_refused": {
+      "BC1": {
+        "requests": 2094,
+        "with_zlib": 0,
+        "destination_bytes": 148766720,
+        "filled_bytes": 0
+      },
+      "BC5": {
+        "requests": 110,
+        "with_zlib": 0,
+        "destination_bytes": 7274496,
+        "filled_bytes": 0
+      },
+      "BC6H": {
+        "requests": 1,
+        "with_zlib": 0,
+        "destination_bytes": 1048576,
+        "filled_bytes": 0
+      },
+      "BC7": {
+        "requests": 197,
+        "with_zlib": 0,
+        "destination_bytes": 25235456,
+        "filled_bytes": 0
+      }
+    }
   },
   "notes": [
     "D3D12.X methods missing on PC show up in called_stubs as '<Interface>::#slot (not on PC)'.",
