@@ -2,7 +2,7 @@
   "xcl_version": "0.1.0",
   "title": "RockstarGamesInc.28872443D20A7",
   "exe": "C:\\Users\\ricky\\Downloads\\Compressed\\GTA6.Xbox.v1.0.2.1-CYBERLEEK\\game_scarlett_master.exe",
-  "crash": "unhandled exception 0xc0000005 in game_scarlett_master.exe+0x23cf683 (write at address 0x0) rax=0x0 rbx=0x0 rcx=0x18b46c5c348 rdx=0x1 rsi=0x5abf00fce8 rdi=0x19de3f84a4e rbp=0x0 r8=0x18b4dee8c40 r9=0x18b4dee8e20 r10=0x18b4dee8ad8 r11=0x18b4dee8c40 r12=0x19d97a644a1 r13=0x146845c28 r14=0x7ffeff184670 r15=0x19dd2236aad rsp=0x5abf00fc70; on the stack: game_scarlett_master.exe+0x4e4ba89, game_scarlett_master.exe+0x2215c35, game_scarlett_master.exe+0x71b9a20, game_scarlett_master.exe+0x2215eca",
+  "crash": "unhandled exception 0xc0000005 in game_scarlett_master.exe+0x23cf683 (write at address 0x0) rax=0x0 rbx=0x0 rcx=0x70024c348 rdx=0x1 rsi=0xf54d2ff928 rdi=0x19f62dbf25b rbp=0x0 r8=0x7074d8c40 r9=0x7074d8e20 r10=0x7074d8ad8 r11=0x7074d8c40 r12=0x19f1db216d6 r13=0x146845c28 r14=0x7ffeff184670 r15=0x19f5172b7ed rsp=0xf54d2ff8b0; on the stack: game_scarlett_master.exe+0x4e4ba89, game_scarlett_master.exe+0x2215c35, game_scarlett_master.exe+0x71b9a20, game_scarlett_master.exe+0x2215eca",
   "exit_code": 3221225477,
   "environment": [
     {
@@ -48,44 +48,44 @@
   "called_stubs": [
     {
       "dll": "d3d12_xs.dll",
-      "function": "ID3D12CommandAllocator::#9 (not on PC)",
-      "calls": 3189,
-      "first_caller": "game_scarlett_master.exe+0x188501"
-    },
-    {
-      "dll": "d3d12_xs.dll",
-      "function": "ID3D12GraphicsCommandList10::#126 (not on PC)",
-      "calls": 3087,
-      "first_caller": "game_scarlett_master.exe+0x3263e"
-    },
-    {
-      "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#142 (not on PC)",
-      "calls": 3087,
+      "calls": 3583,
       "first_caller": "game_scarlett_master.exe+0x329e9"
     },
     {
       "dll": "d3d12_xs.dll",
+      "function": "ID3D12CommandAllocator::#9 (not on PC)",
+      "calls": 3507,
+      "first_caller": "game_scarlett_master.exe+0x188501"
+    },
+    {
+      "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#75 (console extension)",
-      "calls": 3087,
+      "calls": 3396,
       "first_caller": "game_scarlett_master.exe+0x32820"
     },
     {
       "dll": "d3d12_xs.dll",
+      "function": "ID3D12GraphicsCommandList10::#126 (not on PC)",
+      "calls": 3395,
+      "first_caller": "game_scarlett_master.exe+0x3263e"
+    },
+    {
+      "dll": "d3d12_xs.dll",
       "function": "ID3D12CommandQueue::#31 (newer layout)",
-      "calls": 370,
+      "calls": 378,
       "first_caller": "0x0"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#101 (not on PC)",
-      "calls": 12,
+      "calls": 10,
       "first_caller": "game_scarlett_master.exe+0x50a6657"
     },
     {
       "dll": "d3d12_xs.dll",
       "function": "ID3D12GraphicsCommandList10::#131 (not on PC)",
-      "calls": 9,
+      "calls": 4,
       "first_caller": "game_scarlett_master.exe+0x2478bc5"
     },
     {
@@ -120,32 +120,32 @@
     },
     {
       "name": "vcruntime140.dll",
-      "base": "0x17ebbfe0000",
+      "base": "0x20972580000",
       "size": "0x1b000"
     },
     {
       "name": "vcruntime140_1.dll",
-      "base": "0x17ebd9f0000",
+      "base": "0x209725a0000",
       "size": "0xc000"
     },
     {
       "name": "xboxbvhbuilder.dll",
-      "base": "0x17ec5060000",
+      "base": "0x2097b1a0000",
       "size": "0xde000"
     },
     {
       "name": "amd_fidelityfx_loader_xbox.dll",
-      "base": "0x17ebda00000",
+      "base": "0x209725b0000",
       "size": "0x8000"
     },
     {
       "name": "libhttpclient.gdk.dll",
-      "base": "0x17ec5140000",
+      "base": "0x2097b280000",
       "size": "0xf4000"
     },
     {
       "name": "bink2scarlett.dll",
-      "base": "0x17ebda10000",
+      "base": "0x2097b380000",
       "size": "0x44000"
     }
   ],
@@ -155,51 +155,51 @@
     "whiteouts": []
   },
   "shaders": {
-    "unique": 19211,
-    "submitted": 274780,
+    "unique": 19218,
+    "submitted": 274779,
     "by_kind": {
-      "dxbc": 110,
-      "xbox-native": 19101
+      "dxbc": 119,
+      "xbox-native": 19099
     },
     "unknown_parts": {},
     "by_stage": {
       "as": 25479,
       "cs": 2742,
-      "ps": 134404,
-      "rootsig": 111,
-      "vs": 112044
+      "ps": 134398,
+      "rootsig": 122,
+      "vs": 112038
     },
     "rejected_pointers": 0,
     "dump_dir": "C:\\Users\\ricky\\AppData\\Local\\XCL\\RockstarGamesInc.28872443D20A7\\shaders",
     "xbox_hw_stages": {
       "CS": 2734,
       "NGG": 6685,
-      "PS": 8520,
-      "VS": 1162
+      "PS": 8519,
+      "VS": 1161
     },
     "xbox_errors": 0,
-    "rdna2_instructions": 37858990,
+    "rdna2_instructions": 37858913,
     "rdna2_undecoded_dwords": 0,
     "rdna2_mnemonics": [
       [
         "v_mul_legacy_f32",
-        5118044
+        5118036
       ],
       [
         "v_fmac_f32",
-        3438266
+        3438265
       ],
       [
         "s_waitcnt",
-        2118538
+        2118532
       ],
       [
         "v_fma_f32",
-        2052748
+        2052745
       ],
       [
         "v_mov_b32",
-        1843998
+        1843995
       ],
       [
         "v_cndmask_b32",
@@ -207,23 +207,23 @@
       ],
       [
         "s_mov_b32",
-        1243634
+        1243628
       ],
       [
         "v_sub_f32",
-        1227264
+        1227262
       ],
       [
         "v_add_f32",
-        1126947
+        1126946
       ],
       [
         "s_load_dwordx4",
-        805759
+        805758
       ],
       [
         "s_nop",
-        610503
+        610501
       ],
       [
         "v_and_b32",
@@ -255,15 +255,15 @@
       ],
       [
         "v_rcp_f32",
-        381993
+        381988
       ],
       [
         "s_buffer_load_dwordx4",
-        374750
+        374749
       ],
       [
         "v_max_f32",
-        348576
+        348574
       ],
       [
         "v_mul_f32",
@@ -275,7 +275,7 @@
       ],
       [
         "s_load_dwordx8",
-        291098
+        291096
       ],
       [
         "v_lshrrev_b32",
@@ -351,7 +351,7 @@
       ],
       [
         "image_sample_lz",
-        164540
+        164538
       ],
       [
         "s_branch",
@@ -379,7 +379,7 @@
       ],
       [
         "v_nop",
-        147328
+        147323
       ],
       [
         "s_cselect_b32",
@@ -387,7 +387,7 @@
       ],
       [
         "v_exp_f32",
-        136669
+        136663
       ],
       [
         "v_cmp_le_f32",
@@ -423,7 +423,7 @@
       ],
       [
         "s_movk_i32",
-        109658
+        109657
       ],
       [
         "s_and_saveexec_b64",
@@ -447,7 +447,7 @@
       ],
       [
         "exp",
-        98053
+        98049
       ],
       [
         "v_min_f32",
@@ -467,11 +467,11 @@
       ],
       [
         "v_interp_p1_f32",
-        87335
+        87333
       ],
       [
         "v_interp_p2_f32",
-        87335
+        87333
       ],
       [
         "s_mul_i32",
@@ -487,7 +487,7 @@
       ],
       [
         "v_log_f32",
-        80532
+        80527
       ],
       [
         "v_cmp_ne_u32",
@@ -623,7 +623,7 @@
       ],
       [
         "v_cvt_pkrtz_f16_f32",
-        40347
+        40345
       ],
       [
         "s_xor_b64",
@@ -695,7 +695,7 @@
       ],
       [
         "s_endpgm",
-        25072
+        25070
       ],
       [
         "v_pack_b32_f16",
@@ -739,7 +739,7 @@
       ],
       [
         "s_inst_prefetch",
-        19101
+        19099
       ],
       [
         "v_cmp_gt_u32",
@@ -1439,7 +1439,7 @@
       ],
       [
         "s_swappc_b64",
-        337
+        336
       ],
       [
         "s_lshr_b64",
@@ -2163,51 +2163,51 @@
     "fallback_pipelines": 0,
     "failed_pipelines": 0,
     "fallback_root_signatures": 0,
-    "presents": 3076,
-    "frame_boundaries": 3076,
+    "presents": 3375,
+    "frame_boundaries": 3375,
     "last_frame_dump": null,
-    "uma_mb": 512,
-    "uma_used_kb": 119552,
-    "uma_gpu_va": "0x300000000",
+    "uma_mb": 4095,
+    "uma_used_kb": 4094592,
+    "uma_gpu_va": "0x3e0000000",
     "uma_error": "",
-    "uma_import_check": "ok, 1 window(s), 26683 µs",
-    "translated_pipelines": 63,
+    "uma_import_check": "ok, 1 window(s), 31163 µs",
+    "translated_pipelines": 1036,
     "translation_errors": [
       "mesh pipeline with its MS d7c434f73b4b811c in the AS slot – refused",
       "mesh pipeline with its MS 8659e9d5df3e2a9e in the AS slot – refused",
       "mesh pipeline with its MS 2569510a8f45fc8f in the AS slot – refused",
       "mesh pipeline with its MS 83391337d7778b85 in the AS slot – refused",
-      "mesh pipeline with its MS 46a7e2c22a768e71 in the AS slot – refused",
       "mesh pipeline with its MS d8be47673b69a36b in the AS slot – refused",
       "mesh pipeline with its MS df3117932e08790f in the AS slot – refused",
+      "mesh pipeline with its MS 46a7e2c22a768e71 in the AS slot – refused",
+      "mesh pipeline with its MS ea3683175cc1063c in the AS slot – refused",
       "mesh pipeline with its MS 1975c2a6e0fa0b2a in the AS slot – refused",
       "mesh pipeline with its MS 2bdc6171bf337731 in the AS slot – refused",
       "mesh pipeline with its MS 0cc369e804d4ceb9 in the AS slot – refused",
-      "mesh pipeline with its MS ea3683175cc1063c in the AS slot – refused",
       "mesh pipeline with its MS c26dfbed7866f6ea in the AS slot – refused",
       "mesh pipeline with its MS 3393dfd087f8cdf1 in the AS slot – refused",
       "mesh pipeline with its MS b9f81870f0552c0c in the AS slot – refused",
       "mesh pipeline with its MS bc46bcfef12b8d08 in the AS slot – refused",
-      "mesh pipeline with its MS 46c0a00b11312788 in the AS slot – refused",
-      "mesh pipeline with its MS cbde63c29f5df78b in the AS slot – refused",
       "mesh pipeline with its MS 32b93f54af6afb43 in the AS slot – refused",
+      "mesh pipeline with its MS 46c0a00b11312788 in the AS slot – refused",
       "mesh pipeline with its MS 1af98f4aa904699a in the AS slot – refused",
+      "mesh pipeline with its MS cbde63c29f5df78b in the AS slot – refused",
       "mesh pipeline with its MS 2e81a8f85d8b1866 in the AS slot – refused",
       "mesh pipeline with its MS 2014fd71a70d5c80 in the AS slot – refused",
       "mesh pipeline with its MS 3a8635b3e744f405 in the AS slot – refused",
       "mesh pipeline with its MS e5e2b8a1cc1f670c in the AS slot – refused",
       "mesh pipeline with its MS f5b22f533b58a920 in the AS slot – refused",
       "mesh pipeline with its MS 27819c032a1497f1 in the AS slot – refused",
-      "mesh pipeline with its MS 05220b29562bdfbe in the AS slot – refused",
-      "mesh pipeline with its MS c1417364145cbf68 in the AS slot – refused",
       "mesh pipeline with its MS 5524144c7e9e1bf8 in the AS slot – refused",
       "mesh pipeline with its MS c1ab6f7d127c5600 in the AS slot – refused",
+      "mesh pipeline with its MS c1417364145cbf68 in the AS slot – refused",
       "mesh pipeline with its MS 397ccc5c003d279d in the AS slot – refused",
+      "mesh pipeline with its MS 05220b29562bdfbe in the AS slot – refused",
       "mesh pipeline with its MS f8b4ec63795b957a in the AS slot – refused",
       "mesh pipeline with its MS 8c274e3123b82f44 in the AS slot – refused",
       "mesh pipeline with its MS c505395fd3869f71 in the AS slot – refused",
-      "mesh pipeline with its MS c107ef58496ad61d in the AS slot – refused",
       "mesh pipeline with its MS 8880e152e9d88cf5 in the AS slot – refused",
+      "mesh pipeline with its MS c107ef58496ad61d in the AS slot – refused",
       "mesh pipeline with its MS fb5ee08e44bf0a18 in the AS slot – refused",
       "mesh pipeline with its MS 29f678c8f3a58712 in the AS slot – refused",
       "mesh pipeline with its MS 3289b87aa7179b62 in the AS slot – refused",
@@ -2215,16 +2215,16 @@
       "mesh pipeline with its MS f78880048a6e4d38 in the AS slot – refused"
     ],
     "background_pipelines": [
-      63,
+      1036,
       0,
-      58701
+      57725
     ],
     "dxil_cache": {
-      "hits": 26,
-      "misses": 79,
+      "hits": 1959,
+      "misses": 52,
       "coalesced_hits": 0,
       "deferred_misses": 0,
-      "compilations": 79,
+      "compilations": 52,
       "compilation_failures": 0,
       "compilation_errors": []
     }
@@ -2247,10 +2247,10 @@
     "buffers_silenced": 0,
     "source_voice_errors": 0,
     "dropped_flags": [],
-    "xapu_packets_decoded": 3399,
+    "xapu_packets_decoded": 8668,
     "xapu_decode_errors": 0,
-    "xapu_frames": 3251184,
-    "xapu_nonzero_samples": 1496375
+    "xapu_frames": 8317848,
+    "xapu_nonzero_samples": 11929101
   },
   "xgameruntime": {
     "apis": {
@@ -2274,9 +2274,9 @@
   "dstorage": {
     "bcpack_refused": {
       "BC1": {
-        "requests": 2094,
+        "requests": 2163,
         "with_zlib": 0,
-        "destination_bytes": 148766720,
+        "destination_bytes": 152403968,
         "filled_bytes": 0
       },
       "BC5": {
@@ -2292,9 +2292,9 @@
         "filled_bytes": 0
       },
       "BC7": {
-        "requests": 197,
+        "requests": 199,
         "with_zlib": 0,
-        "destination_bytes": 25235456,
+        "destination_bytes": 25251840,
         "filled_bytes": 0
       }
     }
