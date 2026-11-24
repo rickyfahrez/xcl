@@ -230,6 +230,14 @@ fn bcpack_fill_from_env() -> bool {
     std::env::var("XCL_DSTORAGE_BCPACK_FILL").is_ok_and(|v| !v.trim().is_empty() && v.trim() != "0")
 }
 
+/// `XCL_DSTORAGE_BCPACK_SUCCEED=1` (a diagnostic): a refused BCPack request whose destination
+/// took the solid blocks completes with success instead of E_DECOMPRESSION – the title gets a
+/// texture of the right size and the wrong content. It shows whether a failure further on
+/// comes from the refused requests.
+fn bcpack_succeed_from_env() -> bool {
+    std::env::var("XCL_DSTORAGE_BCPACK_SUCCEED").is_ok_and(|v| !v.trim().is_empty() && v.trim() != "0")
+}
+
 /// BC1 colour block: both endpoints magenta (565 `0xF81F`), every index 0.
 const BC1_MAGENTA: [u8; 8] = [0x1F, 0xF8, 0x1F, 0xF8, 0, 0, 0, 0];
 /// BC4 block: both endpoints 255, every index 0.
@@ -935,6 +943,8 @@ struct QueueInner {
     errors: Mutex<(u32, Option<FirstError>)>,
     /// `XCL_DSTORAGE_BCPACK_FILL` when the queue was made
     bcpack_fill: AtomicBool,
+    /// `XCL_DSTORAGE_BCPACK_SUCCEED` when the queue was made
+    bcpack_succeed: AtomicBool,
 }
 
 impl QueueInner {
@@ -1024,9 +1034,11 @@ impl QueueInner {
                         }
                     }
                     Entry::Refused { hr, req, file, fill } => {
-                        if let Some(t) = &fill {
-                            // the destination gets solid blocks; the request still fails
-                            unsafe { bcpack_fill(&req, t) };
+                        // the destination gets solid blocks; the request still fails, except
+                        // under `XCL_DSTORAGE_BCPACK_SUCCEED`
+                        let filled = fill.as_ref().is_some_and(|t| unsafe { bcpack_fill(&req, t) });
+                        if filled && self.bcpack_succeed.load(Ordering::Relaxed) {
+                            continue;
                         }
                         self.fail(hr, req, file.as_deref());
                         if since_status >= 0 {
@@ -1155,6 +1167,7 @@ unsafe extern "system" fn factory_create_queue(_p: *mut c_void, desc: *const u8,
         error_event: ev as usize,
         errors: Mutex::new((0, None)),
         bcpack_fill: AtomicBool::new(bcpack_fill_from_env()),
+        bcpack_succeed: AtomicBool::new(bcpack_succeed_from_env()),
     });
     let o = new_object(queue_vtbl(), inner);
     let hr = queue_qi(o, riid, out);
@@ -1201,7 +1214,7 @@ unsafe extern "system" fn queue_enqueue_request(p: *mut c_void, req: *const u8) 
         let mut fill = None;
         if hr == E_DECOMPRESSION && r.bcpack() != 0 {
             log_bcpack_refusal(&r, BCPACK.note(&r));
-            if q.bcpack_fill.load(Ordering::Relaxed) {
+            if q.bcpack_fill.load(Ordering::Relaxed) || q.bcpack_succeed.load(Ordering::Relaxed) {
                 fill = if !r.dest_physical_pages() {
                     Some(FillTarget::Virtual)
                 } else {
@@ -2249,7 +2262,7 @@ mod tests {
             let mut q = std::ptr::null_mut();
             assert_eq!(create_queue(f, desc.as_ptr(), &IID_QUEUE, &mut q), S_OK);
             let mut s = std::ptr::null_mut();
-            assert_eq!(create_status(f, 2, std::ptr::null(), &IID_STATUS_ARRAY, &mut s), S_OK);
+            assert_eq!(create_status(f, 3, std::ptr::null(), &IID_STATUS_ARRAY, &mut s), S_OK);
             let qv = *(q as *const *const usize);
             let enqueue: unsafe extern "system" fn(*mut c_void, *const u8) = std::mem::transmute(*qv.add(3));
             let status: unsafe extern "system" fn(*mut c_void, *mut c_void, u32) = std::mem::transmute(*qv.add(4));
@@ -2283,6 +2296,13 @@ mod tests {
             assert!(dst[..n].chunks(16).all(|c| c == &block[..c.len()]), "solid BC7 blocks up to the destination size");
             assert!(dst[n..].iter().all(|&b| b == 0xCD), "nothing past the destination size");
             assert!(BCPACK.filled_bytes[7].load(Ordering::Relaxed) >= before + n as u64);
+
+            // the diagnostic switch: the filled request completes with success
+            queue(q).bcpack_fill.store(false, Ordering::Relaxed);
+            queue(q).bcpack_succeed.store(true, Ordering::Relaxed);
+            dst.fill(0xCD);
+            assert_eq!(run(&mut dst, n as u32, 2), S_OK, "XCL_DSTORAGE_BCPACK_SUCCEED: filled and reported as done");
+            assert!(dst[..n].chunks(16).all(|c| c == &block[..c.len()]) && dst[n..].iter().all(|&b| b == 0xCD));
             queue_close(q);
             queue_release(q);
             status_release(s);
