@@ -303,6 +303,15 @@ unsafe fn bcpack_fill(r: &Request, target: &FillTarget) -> bool {
     let bytes: Vec<u8> = block.iter().copied().cycle().take(n).collect();
     let ok = match target {
         FillTarget::Pages(pages) => {
+            // as in `execute`: an entry that was 0 at enqueue is read again now (a title fills
+            // its page array after EnqueueRequest)
+            let late: Vec<usize>;
+            let pages = if pages.contains(&0) && crate::gpu::shader::readable(r.destination as usize, std::mem::size_of_val(&pages[..])) {
+                late = (0..pages.len()).map(|k| if pages[k] != 0 { pages[k] } else { (r.destination as *const usize).add(k).read_unaligned() }).collect();
+                &late[..]
+            } else {
+                &pages[..]
+            };
             let ok = crate::hle::kernelx::write_physical_pages(pages, r.destination_page_offset as usize, &bytes);
             if !ok {
                 note_fill_failure(FILL_PAGES_NOT_LIVE, r);
