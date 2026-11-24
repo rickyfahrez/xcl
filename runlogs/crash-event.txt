@@ -1,0 +1,104 @@
+=== 2026-11-24T12:32:17 event 1001 (Windows Error Reporting)
+Fault bucket 1758186919827362661, type 5
+Event Name: BEX64
+Response: Not available
+Cab Id: 0
+
+Problem signature:
+P1: xcl.exe
+P2: 0.0.0.0
+P3: 6b0520f1
+P4: xgameruntime.dll
+P5: 10.0.26100.7019
+P6: 510c7677
+P7: 0000000000131888
+P8: c0000409
+P9: 0000000000000007
+P10: 
+
+Attached files:
+\\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.d14a3afa-983c-4fb5-b2ba-24153cc7bf2d.tmp.WERInternalMetadata.xml
+
+These files may be available here:
+\\?\C:\ProgramData\Microsoft\Windows\WER\ReportArchive\AppCrash_xcl.exe_206d1145458af457d9e13892ce0fa1f4903_7c9e6de6_3b56f7ff-8bf8-4535-a70e-3165d6edc15e
+
+Analysis symbol: 
+Rechecking for solution: 0
+Report Id: 62aebce3-11dc-40d7-bcef-8c4800e1c15d
+Report Status: 268435456
+Hashed bucket: 1c3d2101cb6648fee86655b0350c5365
+Cab Guid: 0
+
+=== 2026-11-24T12:32:14 event 1001 (Windows Error Reporting)
+Fault bucket , type 0
+Event Name: BEX64
+Response: Not available
+Cab Id: 0
+
+Problem signature:
+P1: xcl.exe
+P2: 0.0.0.0
+P3: 6b0520f1
+P4: xgameruntime.dll
+P5: 10.0.26100.7019
+P6: 510c7677
+P7: 0000000000131888
+P8: c0000409
+P9: 0000000000000007
+P10: 
+
+Attached files:
+
+These files may be available here:
+\\?\C:\ProgramData\Microsoft\Windows\WER\ReportQueue\AppCrash_xcl.exe_206d1145458af457d9e13892ce0fa1f4903_7c9e6de6_3b56f7ff-8bf8-4535-a70e-3165d6edc15e
+
+Analysis symbol: 
+Rechecking for solution: 0
+Report Id: 62aebce3-11dc-40d7-bcef-8c4800e1c15d
+Report Status: 4
+Hashed bucket: 
+Cab Guid: 0
+
+=== 2026-11-24T12:32:14 event 1000 (Application Error)
+Faulting application name: xcl.exe, version: 0.0.0.0, time stamp: 0x6b0520f1
+Faulting module name: xgameruntime.dll, version: 10.0.26100.7019, time stamp: 0x510c7677
+Exception code: 0xc0000409
+Fault offset: 0x0000000000131888
+Faulting process id: 0x7834
+Faulting application start time: 0x1DD7BD5280A5CC2
+Faulting application path: C:\Project Code\xcl\target\debug\xcl.exe
+Faulting module path: C:\WINDOWS\SYSTEM32\xgameruntime.dll
+Report Id: 62aebce3-11dc-40d7-bcef-8c4800e1c15d
+Faulting package full name: 
+Faulting package-relative application ID: 
+
+=== 2026-11-24T12:22:16 event 1001 (Windows Error Reporting)
+Fault bucket 1345063142468776655, type 5
+Event Name: BEX64
+Response: Not available
+Cab Id: 0
+
+Problem signature:
+P1: xcl.exe
+P2: 0.0.0.0
+P3: 6b051edd
+P4: xgameruntime.dll
+P5: 10.0.26100.7019
+P6: 510c7677
+P7: 0000000000131888
+P8: c0000409
+P9: 0000000000000007
+P10: 
+
+Attached files:
+\\?\C:\ProgramData\Microsoft\Windows\WER\Temp\WER.107436cf-a51c-4b82-a02b-cd63a93e6e46.tmp.WERInternalMetadata.xml
+
+These files may be available here:
+\\?\C:\ProgramData\Microsoft\Windows\WER\ReportArchive\AppCrash_xcl.exe_c1fbca7e3cbee238c892b974e6833b9695218fe_84470ea7_b7ff1cd9-23ff-4f96-8e9d-3781e56e09f6
+
+Analysis symbol: 
+Rechecking for solution: 0
+Report Id: 4480e510-60a7-4d6f-ae9c-9d2f65ef121b
+Report Status: 268435456
+Hashed bucket: d92dd9bfed09259ef2aa9fcd375272cf
+Cab Guid: 0
