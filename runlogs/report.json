@@ -1,0 +1,200 @@
+{
+  "xcl_version": "0.1.0",
+  "title": "RockstarGamesInc.28872443D20A7",
+  "exe": "C:\\Users\\ricky\\Downloads\\Compressed\\GTA6.Xbox.v1.0.2.1-CYBERLEEK\\game_scarlett_master.exe",
+  "crash": null,
+  "exit_code": 3221226505,
+  "environment": [
+    {
+      "level": "ok",
+      "what": "GPU: NVIDIA GeForce RTX 5060 Ti (16050 MiB VRAM)"
+    },
+    {
+      "level": "note",
+      "what": "waves of 32–32 lanes: the console's 64-lane programs run as two 32-lane halves (slower; vertex / pixel shaders that read lanes 32–63 can differ)"
+    },
+    {
+      "level": "ok",
+      "what": "DXC 1.9.2602.17 (21d28f72): C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64"
+    }
+  ],
+  "imports_by_source": {
+    "game-dll:amd_fidelityfx_loader_xbox.dll": 4,
+    "game-dll:bink2scarlett.dll": 23,
+    "game-dll:libhttpclient.gdk.dll": 38,
+    "game-dll:msvcp140.dll": 157,
+    "game-dll:vcruntime140.dll": 82,
+    "game-dll:vcruntime140_1.dll": 4,
+    "game-dll:xboxbvhbuilder.dll": 7,
+    "hle-cross:kernelx.dll": 14,
+    "hle:acphal.dll": 19,
+    "hle:d3d12_xs.dll": 4,
+    "hle:gameinput.dll": 1,
+    "hle:kernelx.dll": 56,
+    "hle:minuserx.dll": 2,
+    "hle:xaudio2_9.dll": 1,
+    "hle:xcrdapi.dll": 1,
+    "hle:xg_xs.dll": 2,
+    "stub": 1,
+    "system": 770
+  },
+  "stubbed_imports": [
+    {
+      "importer": "game_scarlett_master.exe",
+      "dll": "xmem.dll",
+      "function": "XMemIsToolsMemAvailable"
+    }
+  ],
+  "called_stubs": [],
+  "modules": [
+    {
+      "name": "game_scarlett_master.exe",
+      "base": "0x140000000",
+      "size": "0xb06d000"
+    },
+    {
+      "name": "msvcp140.dll",
+      "base": "0x180000000",
+      "size": "0x8d000"
+    },
+    {
+      "name": "vcruntime140.dll",
+      "base": "0x2d1ba480000",
+      "size": "0x1b000"
+    },
+    {
+      "name": "vcruntime140_1.dll",
+      "base": "0x2d1ba4b0000",
+      "size": "0xc000"
+    },
+    {
+      "name": "xboxbvhbuilder.dll",
+      "base": "0x2d1c1ae0000",
+      "size": "0xde000"
+    },
+    {
+      "name": "amd_fidelityfx_loader_xbox.dll",
+      "base": "0x2d1ba4c0000",
+      "size": "0x8000"
+    },
+    {
+      "name": "libhttpclient.gdk.dll",
+      "base": "0x2d1c1bc0000",
+      "size": "0xf4000"
+    },
+    {
+      "name": "bink2scarlett.dll",
+      "base": "0x2d1ba4d0000",
+      "size": "0x44000"
+    }
+  ],
+  "vfs": {
+    "unmapped_paths": [],
+    "redirected_writes": [],
+    "whiteouts": []
+  },
+  "shaders": {
+    "unique": 0,
+    "submitted": 0,
+    "by_kind": {},
+    "unknown_parts": {},
+    "by_stage": {},
+    "rejected_pointers": 0,
+    "dump_dir": "C:\\Users\\ricky\\AppData\\Local\\XCL\\RockstarGamesInc.28872443D20A7\\shaders",
+    "xbox_hw_stages": {},
+    "xbox_errors": 0,
+    "rdna2_instructions": 0,
+    "rdna2_undecoded_dwords": 0,
+    "rdna2_mnemonics": [],
+    "recomp_programs": 0,
+    "recomp_complete": 0,
+    "recomp_modes": {},
+    "recomp_unsupported": {},
+    "recomp_dxc_ok": 0,
+    "recomp_dxc_cached": 0,
+    "recomp_dxc_failed": 0
+  },
+  "dxc": {
+    "dir": "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.26100.0\\x64",
+    "dxcompiler": {
+      "file_version": "1.9.2602.17",
+      "major": 1,
+      "minor": 9,
+      "commit": "21d28f72"
+    },
+    "dxil": {
+      "file_version": "1.9.2602.17",
+      "major": 1,
+      "minor": 9,
+      "commit": ""
+    }
+  },
+  "d3d12": {
+    "backend": "real",
+    "adapter": "NVIDIA GeForce RTX 5060 Ti (16050 MiB VRAM)",
+    "classes": [],
+    "unknown_iids": [],
+    "fallback_pipelines": 0,
+    "failed_pipelines": 0,
+    "fallback_root_signatures": 0,
+    "presents": 0,
+    "frame_boundaries": 0,
+    "last_frame_dump": null,
+    "uma_mb": 512,
+    "uma_used_kb": 65536,
+    "uma_gpu_va": "0x300000000",
+    "uma_error": "",
+    "uma_import_check": "ok, 1 window(s), 26497 µs",
+    "translated_pipelines": 0,
+    "translation_errors": [],
+    "background_pipelines": [
+      0,
+      0,
+      0
+    ],
+    "dxil_cache": {
+      "hits": 0,
+      "misses": 0,
+      "coalesced_hits": 0,
+      "deferred_misses": 0,
+      "compilations": 0,
+      "compilation_failures": 0,
+      "compilation_errors": []
+    }
+  },
+  "audio": {
+    "engines": 0,
+    "engine_errors": 0,
+    "mastering_voices": 0,
+    "mastering_retries": 0,
+    "mastering_errors": 0,
+    "source_voices": 0,
+    "xma_voices": 0,
+    "xma_buffers_decoded": 0,
+    "xma_decode_errors": 0,
+    "opus_voices": 0,
+    "opus_buffers_decoded": 0,
+    "opus_decode_errors": 0,
+    "unsupported_formats": [],
+    "silent_voices": 0,
+    "buffers_silenced": 0,
+    "source_voice_errors": 0,
+    "dropped_flags": [],
+    "xapu_packets_decoded": 0,
+    "xapu_decode_errors": 0,
+    "xapu_frames": 0,
+    "xapu_nonzero_samples": 0
+  },
+  "xgameruntime": {
+    "apis": {},
+    "unimplemented": {}
+  },
+  "dstorage": {
+    "bcpack_refused": {}
+  },
+  "notes": [
+    "D3D12.X methods missing on PC show up in called_stubs as '<Interface>::#slot (not on PC)'.",
+    "Console-format shaders are replaced (fallback_pipelines) until the RDNA2 recompiler is finished.",
+    "Direct Nt* calls on files do not go through the VFS."
+  ]
+}
