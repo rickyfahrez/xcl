@@ -930,6 +930,16 @@ fn trace(what: &'static str, list: usize, va: u64, value: u64) {
     trace_slot(what, list, va, value, 0);
 }
 
+/// Whether `XCL_TRACE_WAITS` is on.
+pub(super) fn tracing() -> bool {
+    trace_waits()
+}
+
+/// Whether `p` is a command list XCL keeps state for (one the title recorded on).
+pub(super) fn is_known_list(p: usize) -> bool {
+    LISTS.lock().unwrap().as_ref().is_some_and(|m| m.contains_key(&p))
+}
+
 /// A title's call of command queue method `slot` (Signal, Wait, SignalX, PresentX, the ones
 /// XCL does not model …) with its first two arguments.
 pub(super) fn trace_queue_call(queue: usize, slot: usize, a1: usize, a2: usize) {

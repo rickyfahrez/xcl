@@ -4968,11 +4968,44 @@ unsafe fn queue_dispatch(slot: usize, this: *mut c_void, a1: usize, a2: usize, a
                     }
                 }
             };
-            let _ = a4;
+            // XCL_TRACE_WAITS: what the title passes to a method XCL does not model (the first 12 calls)
+            static SHOWN: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+            if super::list_x::tracing() && SHOWN.fetch_add(1, Ordering::Relaxed) < 12 {
+                describe_queue_call(slot, this, a1, a2, a3, a4);
+            }
             stubs::record_call(info, 0);
             0
         }
     }
+}
+
+/// Log a queue call XCL does not model: its arguments and, when the second one points at
+/// readable memory, the first 16 words there – each said to be a command list of the title's, a
+/// pointer (with the four words it points at) or a plain value. It shows whether the method
+/// takes command lists.
+unsafe fn describe_queue_call(slot: usize, this: *mut c_void, a1: usize, a2: usize, a3: usize, a4: usize) {
+    let readable = |p: usize, n: usize| p >= 0x1_0000 && crate::gpu::shader::readable(p, n);
+    let mut out = format!("D3D12.X: queue {:#x} method #{slot}({a1:#x}, {a2:#x}, {a3:#x}, {a4:#x}) is not modelled", this as usize);
+    for k in 0..16usize {
+        let at = a2.wrapping_add(8 * k);
+        if !readable(at, 8) {
+            break;
+        }
+        let w = (at as *const usize).read_unaligned();
+        let p = w as *mut c_void;
+        let what = if super::list_x::is_known_list(w) {
+            " – a command list the title recorded on".to_string()
+        } else if readable(w, 8) && (super::console_list::pc_list(p).is_some() || super::title_list::backing(p).is_some()) {
+            " – a console-shaped command list".to_string()
+        } else if readable(w, 32) {
+            let v: [usize; 4] = (w as *const [usize; 4]).read_unaligned();
+            format!(" → [{:#x}, {:#x}, {:#x}, {:#x}] (first word: {})", v[0], v[1], v[2], v[3], crate::modules::describe_address(v[0]))
+        } else {
+            String::new()
+        };
+        out.push_str(&format!("\n  [{k}] {w:#x}{what}"));
+    }
+    crate::xlog_info!("{out}");
 }
 
 macro_rules! queue_slots {
