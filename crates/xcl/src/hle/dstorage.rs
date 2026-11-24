@@ -271,15 +271,47 @@ enum FillTarget {
     Pages(Vec<usize>),
 }
 
+/// Why a refused BCPack request's destination did not get its solid blocks.
+const FILL_NO_PAGE_ARRAY: usize = 0;
+const FILL_NO_BLOCK: usize = 1;
+const FILL_PAGES_NOT_LIVE: usize = 2;
+const FILL_NOT_WRITABLE: usize = 3;
+
+/// A fill that was not done: logged the first time and at each doubling of its reason's count
+/// (under `XCL_DSTORAGE_BCPACK_SUCCEED` such a request still fails).
+fn note_fill_failure(reason: usize, r: &Request) {
+    const WHY: [&str; 4] = [
+        "its page array could not be read",
+        "its mode has no solid block",
+        "its physical pages are not live allocations",
+        "its destination is not committed, writable memory",
+    ];
+    static N: [AtomicU64; 4] = [AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0), AtomicU64::new(0)];
+    let k = N[reason].fetch_add(1, Ordering::Relaxed) + 1;
+    if k.is_power_of_two() {
+        crate::xlog_warn!("DirectStorage: BCPack fill not done ({k} so far for this reason): {}: {r:x?}", WHY[reason]);
+    }
+}
+
 /// Fill the title's destination of `r` (exactly `destination_size` bytes) with solid blocks.
 unsafe fn bcpack_fill(r: &Request, target: &FillTarget) -> bool {
-    let Some(block) = bcpack_fill_block(r.bcpack()) else { return false };
+    let Some(block) = bcpack_fill_block(r.bcpack()) else {
+        note_fill_failure(FILL_NO_BLOCK, r);
+        return false;
+    };
     let n = r.destination_size as usize;
     let bytes: Vec<u8> = block.iter().copied().cycle().take(n).collect();
     let ok = match target {
-        FillTarget::Pages(pages) => crate::hle::kernelx::write_physical_pages(pages, r.destination_page_offset as usize, &bytes),
+        FillTarget::Pages(pages) => {
+            let ok = crate::hle::kernelx::write_physical_pages(pages, r.destination_page_offset as usize, &bytes);
+            if !ok {
+                note_fill_failure(FILL_PAGES_NOT_LIVE, r);
+            }
+            ok
+        }
         FillTarget::Virtual => {
             if !writable(r.destination as usize, n) {
+                note_fill_failure(FILL_NOT_WRITABLE, r);
                 return false;
             }
             if n > 0 {
@@ -1218,7 +1250,11 @@ unsafe extern "system" fn queue_enqueue_request(p: *mut c_void, req: *const u8) 
                 fill = if !r.dest_physical_pages() {
                     Some(FillTarget::Virtual)
                 } else {
-                    snapshot_page_array(r.destination, r.destination_page_offset, r.destination_size).ok().map(FillTarget::Pages)
+                    let pages = snapshot_page_array(r.destination, r.destination_page_offset, r.destination_size).ok();
+                    if pages.is_none() {
+                        note_fill_failure(FILL_NO_PAGE_ARRAY, &r);
+                    }
+                    pages.map(FillTarget::Pages)
                 };
             }
         }
