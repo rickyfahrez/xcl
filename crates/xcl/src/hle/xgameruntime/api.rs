@@ -157,6 +157,9 @@ fn pc() -> Option<&'static Pc> {
 }
 
 unsafe fn pc_object(c: &Guid, i: &Guid) -> Option<usize> {
+    // logged before the call: the PC runtime can end the process inside it with a fail-fast
+    // (0xC0000409), which leaves no other trace of the class that was asked for
+    crate::xlog_debug!("XGameRuntime: asking the PC runtime for {c}/{i} ({})", family(c));
     let mut o: *mut c_void = std::ptr::null_mut();
     ((pc()?.query)(c, i, &mut o) >= 0 && !o.is_null()).then_some(o as usize)
 }
