@@ -871,6 +871,81 @@ fn pick_queue(last_queue: Option<usize>, device: usize, ty: D3D12_COMMAND_LIST_T
     g.iter().rev().find(|info| info.ty == ty && (device == 0 || info.device == 0 || info.device == device)).map(|info| info.queue)
 }
 
+// ---------------------------------------------------------------------------------------
+// XCL_TRACE_WAITS: what was written, waited for and executed before a wait timed out
+// ---------------------------------------------------------------------------------------
+
+/// `XCL_TRACE_WAITS=1` (a diagnostic): the last `TRACE_KEPT` immediate writes, memory waits and
+/// list executions are kept, and a wait that times out logs the ones about its address, its
+/// value and the lists that wrote there – whether the write a title waits for was recorded at
+/// all, on which list, and whether that list was executed before or after the wait.
+fn trace_waits() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| std::env::var("XCL_TRACE_WAITS").is_ok_and(|v| !v.trim().is_empty() && v.trim() != "0"))
+}
+
+const TRACE_KEPT: usize = 8192;
+const TRACE_EXECUTE: &str = "execute";
+
+struct TraceEvent {
+    t: f64,
+    thread: u32,
+    what: &'static str,
+    list: usize,
+    va: u64,
+    value: u64,
+}
+
+impl TraceEvent {
+    fn line(&self) -> String {
+        if self.what == TRACE_EXECUTE {
+            format!("  [{:9.3}][{:5}] execute list {:#x}", self.t, self.thread, self.list)
+        } else {
+            format!("  [{:9.3}][{:5}] {} {:#x} = {:#x} on list {:#x}", self.t, self.thread, self.what, self.va, self.value, self.list)
+        }
+    }
+}
+
+static TRACE: Mutex<std::collections::VecDeque<TraceEvent>> = Mutex::new(std::collections::VecDeque::new());
+
+fn trace(what: &'static str, list: usize, va: u64, value: u64) {
+    if !trace_waits() {
+        return;
+    }
+    let thread = unsafe { windows_sys::Win32::System::Threading::GetCurrentThreadId() };
+    let mut g = TRACE.lock().unwrap();
+    if g.len() >= TRACE_KEPT {
+        g.pop_front();
+    }
+    g.push_back(TraceEvent { t: crate::log::uptime(), thread, what, list, va, value });
+}
+
+/// The kept events about a wait that timed out (the first 6 timeouts).
+fn dump_trace(w: &PendingWait) {
+    static DUMPS: AtomicU64 = AtomicU64::new(0);
+    if !trace_waits() || !once(&DUMPS, 6) {
+        return;
+    }
+    let g = TRACE.lock().unwrap();
+    let at = |e: &TraceEvent| e.what != TRACE_EXECUTE && e.va < w.va + w.width as u64 && w.va < e.va + 8;
+    let lists: Vec<usize> = g.iter().filter(|e| at(e)).map(|e| e.list).collect();
+    let about: Vec<String> = g
+        .iter()
+        .filter(|e| at(e) || (e.what == TRACE_EXECUTE && lists.contains(&e.list)) || (e.what != TRACE_EXECUTE && e.value == w.value))
+        .map(TraceEvent::line)
+        .collect();
+    let last: Vec<String> = g.iter().filter(|e| e.what != TRACE_EXECUTE).map(TraceEvent::line).collect();
+    crate::xlog_warn!(
+        "D3D12.X: wait trace for {:#x} (want {:#x}): {} events kept; {} about this address, its value or the lists that wrote there (the last 48):\n{}\n  the last 24 writes and waits anywhere:\n{}",
+        w.va,
+        w.value,
+        g.len(),
+        about.len(),
+        about[about.len().saturating_sub(48)..].join("\n"),
+        last[last.len().saturating_sub(24)..].join("\n")
+    );
+}
+
 fn note_write(list: usize, va: u64, size: u64) {
     LISTS.lock().unwrap().get_or_insert_with(HashMap::new).entry(list).or_default().note_write(va, size);
 }
@@ -889,6 +964,7 @@ unsafe fn wait_all(waits: &[PendingWait]) {
                 w.mask,
                 w.read_value()
             );
+            dump_trace(w);
         }
     }
 }
@@ -931,6 +1007,9 @@ pub(super) unsafe fn cpu_writes_after(queue: *mut c_void, lists: &[*mut c_void])
 /// Submit `lists` through `submit`, splitting the batch before any list whose `Wait32/64BitValueX`
 /// condition is not yet satisfied so earlier lists in the same batch can run on the GPU first.
 pub(super) unsafe fn execute_with_waits(lists: &[*mut c_void], mut submit: impl FnMut(&[*mut c_void])) {
+    for &l in lists {
+        trace(TRACE_EXECUTE, l as usize, 0, 0);
+    }
     if lists.is_empty() || PENDING_WAIT_LISTS.load(Ordering::Acquire) == 0 {
         submit(lists);
         return;
@@ -1091,7 +1170,9 @@ pub(super) unsafe extern "system" fn fill128_x(this: *mut c_void, va: u64, size:
 unsafe fn write(list: *mut c_void, va: u64, words: &[u32], mode: D3D12_WRITEBUFFERIMMEDIATE_MODE, what: &str) {
     static N: AtomicU64 = AtomicU64::new(0);
     let n = 4 * words.len() as u64;
+    let traced = words.first().map_or(0, |&w| w as u64) | words.get(1).map_or(0, |&w| (w as u64) << 32);
     if !va.is_multiple_of(n) {
+        trace("write refused (alignment)", list as usize, va, traced);
         return warn(&N, what, format_args!("{va:#x} is not {n}-byte aligned"));
     }
     let (Some((d, _)), Some(at)) = (real::uma_window_buffer(va as usize, n as usize), real::uma_va_of(va as usize)) else {
@@ -1099,11 +1180,14 @@ unsafe fn write(list: *mut c_void, va: u64, words: &[u32], mode: D3D12_WRITEBUFF
         if super::cpu_writes::writable(va as usize, n as usize) {
             if let Some(s) = LISTS.lock().unwrap().as_mut().and_then(|m| m.get_mut(&(list as usize))) {
                 s.cpu_writes.push(super::cpu_writes::Write::Immediate(va as usize, words.to_vec()));
+                trace("write left to the CPU", list as usize, va, traced);
                 return;
             }
         }
+        trace("write refused (not in unified memory)", list as usize, va, traced);
         return warn(&N, what, format_args!("{va:#x} is not in unified memory"));
     };
+    trace("write", list as usize, va, traced);
     note_write(list as usize, va, n);
     let params: Vec<D3D12_WRITEBUFFERIMMEDIATE_PARAMETER> = words.iter().enumerate().map(|(i, &w)| D3D12_WRITEBUFFERIMMEDIATE_PARAMETER { Dest: at + 4 * i as u64, Value: w }).collect();
     let modes = vec![mode; words.len()];
@@ -1261,8 +1345,10 @@ unsafe fn wait_memory(list: *mut c_void, va: u64, width: u8, comparison: u32, va
     let mut g = LISTS.lock().unwrap();
     let s = g.get_or_insert_with(HashMap::new).entry(list as usize).or_default();
     if s.has_prior_write(va, n) {
+        trace("wait dropped (written earlier on the same list)", list as usize, va, value);
         return;
     }
+    trace("wait", list as usize, va, value);
     s.push_wait(PendingWait { va, width, comparison, value, mask });
 }
 
