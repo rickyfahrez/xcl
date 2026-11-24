@@ -716,6 +716,7 @@ pub unsafe fn on_create(list: *mut c_void, alloc: usize, pso: usize, ty: D3D12_C
 /// Clean up all tracked state when a command list is released for good.
 pub(super) fn on_release(list: usize) {
     super::title_textures::list_reset(list);
+    writes_submitted(&[list as *mut c_void]);
     let old = LISTS.lock().unwrap().as_mut().and_then(|m| m.remove(&list));
     if let Some(old) = old {
         if !old.pending_waits.is_empty() {
@@ -948,16 +949,62 @@ fn dump_trace(w: &PendingWait) {
 
 fn note_write(list: usize, va: u64, size: u64) {
     LISTS.lock().unwrap().get_or_insert_with(HashMap::new).entry(list).or_default().note_write(va, size);
+    if short_wait_for_unsubmitted() && size != 0 {
+        let mut g = UNSUBMITTED_WRITES.lock().unwrap();
+        let ranges = g.get_or_insert_with(HashMap::new).entry(list).or_default();
+        if ranges.len() < MAX_WRITTEN_RANGES {
+            ranges.push((va, va.saturating_add(size)));
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------------------
+// XCL_WAIT_UNSUBMITTED_SHORT: a wait whose write is on a list not executed yet
+// ---------------------------------------------------------------------------------------
+
+/// `XCL_WAIT_UNSUBMITTED_SHORT=1` (an experiment): a memory wait whose address was written by
+/// a list that is recorded and not executed yet waits `SHORT_WAIT`, not `WAIT_TIMEOUT`. A title
+/// submits its lists from one thread, the waiting ones before the ones that write (on the
+/// console the GPU waits, the CPU goes on submitting): the wait on the CPU could not end before
+/// its timeout – 2 s for each waiting list, 15 in a row, and the title ended.
+fn short_wait_for_unsubmitted() -> bool {
+    static ON: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *ON.get_or_init(|| std::env::var("XCL_WAIT_UNSUBMITTED_SHORT").is_ok_and(|v| !v.trim().is_empty() && v.trim() != "0"))
+}
+
+const SHORT_WAIT: Duration = Duration::from_millis(20);
+
+/// list → the `(start, end)` ranges its immediate writes target, from the write until the
+/// list is executed or reset (only under `XCL_WAIT_UNSUBMITTED_SHORT`)
+static UNSUBMITTED_WRITES: Mutex<Option<HashMap<usize, Vec<(u64, u64)>>>> = Mutex::new(None);
+
+/// `lists` are executed (or record anew): their writes are no longer waited for in vain.
+fn writes_submitted(lists: &[*mut c_void]) {
+    if !short_wait_for_unsubmitted() {
+        return;
+    }
+    if let Some(m) = UNSUBMITTED_WRITES.lock().unwrap().as_mut() {
+        for &l in lists {
+            m.remove(&(l as usize));
+        }
+    }
+}
+
+/// Whether a list that is not executed yet writes where `w` waits.
+fn waits_for_unsubmitted_write(w: &PendingWait) -> bool {
+    let end = w.va.saturating_add(w.width as u64);
+    UNSUBMITTED_WRITES.lock().unwrap().as_ref().is_some_and(|m| m.values().any(|ranges| ranges.iter().any(|&(s, e)| w.va < e && s < end)))
 }
 
 unsafe fn wait_all(waits: &[PendingWait]) {
     static TIMEOUTS: AtomicU64 = AtomicU64::new(0);
     for w in waits {
-        if !w.wait_until_satisfied(WAIT_TIMEOUT) && once(&TIMEOUTS, 40) {
+        let timeout = if short_wait_for_unsubmitted() && waits_for_unsubmitted_write(w) { SHORT_WAIT } else { WAIT_TIMEOUT };
+        if !w.wait_until_satisfied(timeout) && once(&TIMEOUTS, 40) {
             crate::xlog_warn!(
                 "D3D12.X: Wait{}BitValueX timed out after {} ms at {:#x} (op {}, want {:#x}, mask {:#x}; memory holds {:x?})",
                 w.width * 8,
-                WAIT_TIMEOUT.as_millis(),
+                timeout.as_millis(),
                 w.va,
                 w.comparison,
                 w.value,
@@ -1012,6 +1059,7 @@ pub(super) unsafe fn execute_with_waits(lists: &[*mut c_void], mut submit: impl 
     }
     if lists.is_empty() || PENDING_WAIT_LISTS.load(Ordering::Acquire) == 0 {
         submit(lists);
+        writes_submitted(lists);
         return;
     }
     let per_list: Vec<Vec<PendingWait>> = {
@@ -1034,12 +1082,15 @@ pub(super) unsafe fn execute_with_waits(lists: &[*mut c_void], mut submit: impl 
         if i > start {
             submit(&lists[start..i]);
         }
+        // the lists before this one are with the GPU: their writes can still end the wait
+        writes_submitted(&lists[..i]);
         wait_all(waits);
         start = i;
     }
     if start < lists.len() {
         submit(&lists[start..]);
     }
+    writes_submitted(lists);
 }
 
 // ---------------------------------------------------------------------------------------
@@ -1653,6 +1704,7 @@ pub unsafe extern "system" fn kickoff_x(this: *mut c_void) {
     let exec: ExecFn = transmute_copy(&real::orig_fn(q_raw, PC_QUEUE_EXECUTE_COMMAND_LISTS));
     let one = [this];
     exec(q_raw, 1, one.as_ptr());
+    writes_submitted(&one);
     // what ran is in the textures' states; the list records anew after its Reset below
     super::title_textures::submitted(&one);
     super::title_textures::list_reset(this as usize);
@@ -2228,6 +2280,7 @@ pub unsafe extern "system" fn reset_x(this: *mut c_void, alloc: usize, pso: usiz
         s.bindings = Bindings::default();
         s.list_type == Some(D3D12_COMMAND_LIST_TYPE_BUNDLE)
     };
+    writes_submitted(&[this]);
     super::title_textures::list_reset(this as usize);
     super::bind::reset(this, alloc, pso);
     if !is_bundle && pso != 0 {
