@@ -150,6 +150,26 @@ pub fn install_crash_handler() {
         install_invalid_parameter_handler();
         windows_sys::Win32::System::Diagnostics::Debug::AddVectoredExceptionHandler(0, Some(cpp_exception_logger));
     }
+    install_panic_hook();
+}
+
+/// A panic in XCL's own code goes to the log with its message, its location and the calls that
+/// led there, then to the hook that was there before (the message on stderr). One that reaches
+/// the edge of an `extern "system"` function called by the title cannot unwind and aborts the
+/// process with `__fastfail` (0xC0000409), which no exception filter sees – without this the
+/// log just stops.
+fn install_panic_hook() {
+    let previous = std::panic::take_hook();
+    std::panic::set_hook(Box::new(move |info| {
+        let payload = info.payload();
+        let message = payload.downcast_ref::<&str>().copied().or_else(|| payload.downcast_ref::<String>().map(String::as_str)).unwrap_or("(no message)");
+        let location = info.location().map_or_else(|| "an unknown location".to_string(), |l| format!("{}:{}:{}", l.file(), l.line(), l.column()));
+        let here = 0usize;
+        let callers = unsafe { stack_callers_n(&here as *const usize as usize, 16) };
+        crate::xlog_error!("XCL panicked at {location}: {message}; on the stack: {callers}");
+        crate::log::flush();
+        previous(info);
+    }));
 }
 
 /// MSVC's x64 `__security_check_cookie` (vcruntime): `cmp rcx, [__security_cookie]; jne fail;
