@@ -892,6 +892,8 @@ const TRACE_EXECUTE: &str = "execute";
 const TRACE_QUEUE: &str = "queue";
 /// Fence::Signal from the CPU: `list` is the fence
 const TRACE_FENCE_SIGNAL: &str = "fence signalled by the CPU";
+/// an immediate write recorded for the GPU: `slot` is its size in bytes (4 or 8)
+const TRACE_WRITE: &str = "write";
 
 struct TraceEvent {
     t: f64,
@@ -951,6 +953,41 @@ pub fn dump_trace_at_crash() {
         g.iter().skip(g.len().saturating_sub(400)).map(TraceEvent::line).collect()
     };
     crate::xlog_warn!("D3D12.X: the last {} queue calls, executions, writes and waits before the end:\n{}\n  fences:\n{}", lines.len(), lines.join("\n"), super::fence_x::state_lines().join("\n"));
+    // did the GPU's writes reach the memory the title reads? For each address: the last write
+    // kept, whether its list was executed after it, and what the memory holds now
+    let (total, mut missing) = {
+        let g = TRACE.lock().unwrap_or_else(|e| e.into_inner());
+        let mut last: HashMap<u64, usize> = HashMap::new();
+        for (i, e) in g.iter().enumerate() {
+            if e.what == TRACE_WRITE {
+                last.insert(e.va, i);
+            }
+        }
+        let mut missing: Vec<(usize, String)> = Vec::new();
+        for (&va, &i) in &last {
+            let e = &g[i];
+            let executed = g.iter().skip(i + 1).any(|x| x.what == TRACE_EXECUTE && x.list == e.list);
+            let now = unsafe {
+                if !crate::gpu::shader::readable(va as usize, e.slot.max(4)) {
+                    None
+                } else if e.slot == 4 {
+                    Some((va as *const u32).read_unaligned() as u64)
+                } else {
+                    Some((va as *const u64).read_unaligned())
+                }
+            };
+            if now != Some(e.value) {
+                missing.push((i, format!("{} – its list was {}; the memory holds {now:x?}", e.line(), if executed { "executed after it" } else { "not executed" })));
+            }
+        }
+        (last.len(), missing)
+    };
+    missing.sort();
+    crate::xlog_warn!(
+        "D3D12.X: {total} addresses were written by the GPU in the kept events; {} do not hold the last value written (the last 80):\n{}",
+        missing.len(),
+        missing[missing.len().saturating_sub(80)..].iter().map(|m| m.1.as_str()).collect::<Vec<_>>().join("\n")
+    );
 }
 
 fn trace_slot(what: &'static str, list: usize, va: u64, value: u64, slot: usize) {
@@ -1282,7 +1319,7 @@ unsafe fn write(list: *mut c_void, va: u64, words: &[u32], mode: D3D12_WRITEBUFF
         trace("write refused (not in unified memory)", list as usize, va, traced);
         return warn(&N, what, format_args!("{va:#x} is not in unified memory"));
     };
-    trace("write", list as usize, va, traced);
+    trace_slot(TRACE_WRITE, list as usize, va, traced, n as usize);
     note_write(list as usize, va, n);
     let params: Vec<D3D12_WRITEBUFFERIMMEDIATE_PARAMETER> = words.iter().enumerate().map(|(i, &w)| D3D12_WRITEBUFFERIMMEDIATE_PARAMETER { Dest: at + 4 * i as u64, Value: w }).collect();
     let modes = vec![mode; words.len()];
