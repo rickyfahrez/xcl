@@ -50,7 +50,6 @@ $code = '0x{0:x}' -f $p.ExitCode
 
 $out = Join-Path $root 'runlogs'
 $null = New-Item -ItemType Directory -Force $out
-Remove-Item (Join-Path $out 'xcl.log'), (Join-Path $out 'report.json') -ErrorAction SilentlyContinue
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText((Join-Path $out 'console.txt'), "xcl $commit, exit $code`n--- stdout`n$stdout`n--- stderr`n$stderr", $utf8)
 
@@ -58,9 +57,13 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 $logLine = ($stdout -split "`n" | Where-Object { $_ -match '(^Log:|see the log:)\s+(.+)$' } | Select-Object -Last 1)
 if ($logLine) {
     $log = ($logLine -replace '^.*?(Log:|see the log:)\s+', '').Trim()
-    if (Test-Path $log) { Copy-Item $log (Join-Path $out 'xcl.log') -Force }
+    # XCL built from this branch writes both to runlogs\ itself: nothing to copy then
+    $inPlace = (Test-Path $log) -and ((Split-Path (Resolve-Path $log) -Parent) -eq (Resolve-Path $out).Path)
     $report = Join-Path (Split-Path $log -Parent) 'report.json'
-    if (Test-Path $report) { Copy-Item $report (Join-Path $out 'report.json') -Force }
+    if (-not $inPlace) {
+        if (Test-Path $log) { Copy-Item $log (Join-Path $out 'xcl.log') -Force }
+        if (Test-Path $report) { Copy-Item $report (Join-Path $out 'report.json') -Force }
+    }
 } else {
     Write-Warning 'XCL printed no log path: only console.txt is recorded'
 }

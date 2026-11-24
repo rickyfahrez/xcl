@@ -270,8 +270,13 @@ pub struct Boot {
 }
 
 impl Boot {
+    /// This branch only: the log and the report go to `runlogs\` of the source tree XCL was
+    /// built from (not `{data}\logs`), so a run is committed and pulled on another machine.
     pub fn logs_dir(&self) -> PathBuf {
-        self.data_dir.join("logs")
+        match std::path::Path::new(env!("CARGO_MANIFEST_DIR")).ancestors().nth(2) {
+            Some(repo) => repo.join("runlogs"),
+            None => self.data_dir.join("logs"),
+        }
     }
     pub fn cache_dir(&self) -> PathBuf {
         self.data_dir.join("cache")
